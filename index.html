@@ -2,133 +2,137 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Universal-Zon AI - THE WHORD'S & UNIVERSAL-ZON LLC</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #0b0f19; color: #f8fafc; height: 100vh; overflow: hidden; display: flex; }
+    html, body { height: 100%; height: 100dvh; background-color: #0b0f19; color: #f8fafc; overflow: hidden; }
 
-    /* PANTALLAS DE FLUJO INICIAL (OVERLAYS) */
+    /* PANTALLAS DE FLUJO INICIAL */
     .flow-screen {
       position: fixed; inset: 0; background: #0b0f19; z-index: 500;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 24px; overflow-y: auto;
+      padding: 20px; overflow-y: auto; height: 100dvh;
     }
     .flow-screen.hidden { display: none; }
 
-    /* 1. BIENVENIDA (activity_welcome.xml) */
     .uz-card-logo {
-      width: 88px; height: 88px; background: #1e293b; border-radius: 24px;
+      width: 80px; height: 80px; background: #1e293b; border-radius: 20px;
       border: 1px solid #334155; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
-    .uz-logo-text { font-size: 2rem; font-weight: 800; color: #e2e8f0; letter-spacing: 2px; }
-    .welcome-title { font-size: 1.7rem; font-weight: 700; color: #ffffff; margin-top: 24px; text-align: center; }
-    .welcome-company { font-size: 0.85rem; color: #94a3b8; margin-top: 8px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-    .welcome-divider { width: 56px; height: 2px; background: #475569; margin: 24px 0; }
-    .welcome-headline { font-size: 1.25rem; font-weight: 700; color: #ffffff; text-align: center; }
-    .welcome-desc { font-size: 0.95rem; color: #94a3b8; text-align: center; margin-top: 12px; line-height: 1.5; max-width: 380px; }
+    .uz-logo-text { font-size: 1.8rem; font-weight: 800; color: #e2e8f0; letter-spacing: 2px; }
+    .welcome-title { font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-top: 20px; text-align: center; }
+    .welcome-company { font-size: 0.8rem; color: #94a3b8; margin-top: 6px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+    .welcome-divider { width: 48px; height: 2px; background: #475569; margin: 18px 0; }
+    .welcome-headline { font-size: 1.15rem; font-weight: 700; color: #ffffff; text-align: center; }
+    .welcome-desc { font-size: 0.9rem; color: #94a3b8; text-align: center; margin-top: 10px; line-height: 1.4; max-width: 360px; }
     .btn-flow {
-      width: 100%; max-width: 380px; height: 54px; background: #e2e8f0; color: #0b0f19;
-      border: none; border-radius: 16px; font-size: 1rem; font-weight: 700; cursor: pointer;
-      margin-top: 32px; transition: background 0.2s;
+      width: 100%; max-width: 360px; height: 50px; background: #e2e8f0; color: #0b0f19;
+      border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      margin-top: 24px; transition: background 0.2s;
     }
-    .btn-flow:hover { background: #ffffff; }
     .btn-flow:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
-    .brand-tagline { font-size: 0.8rem; color: #64748b; margin-top: 20px; }
+    .brand-tagline { font-size: 0.75rem; color: #64748b; margin-top: 16px; }
 
-    /* 2. CONSENTIMIENTO Y POLÍTICAS (LegalDocuments.kt) */
-    .legal-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; height: 90vh; }
-    .legal-header { text-align: center; margin-bottom: 16px; }
-    .legal-header h2 { font-size: 1.3rem; color: #fff; }
-    .legal-header p { font-size: 0.85rem; color: #94a3b8; margin-top: 4px; }
-    .tab-bar { display: flex; gap: 8px; margin-bottom: 12px; }
+    /* DOCUMENTOS LEGALES */
+    .legal-container { width: 100%; max-width: 480px; display: flex; flex-direction: column; height: 88dvh; }
+    .legal-header { text-align: center; margin-bottom: 12px; }
+    .legal-header h2 { font-size: 1.2rem; color: #fff; }
+    .legal-header p { font-size: 0.8rem; color: #94a3b8; }
+    .tab-bar { display: flex; gap: 8px; margin-bottom: 10px; }
     .tab-btn {
       flex: 1; padding: 10px; background: #1e293b; border: 1px solid #334155;
-      color: #94a3b8; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
+      color: #94a3b8; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.8rem;
     }
     .tab-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
     .legal-box {
-      flex: 1; background: #111827; border: 1px solid #334155; border-radius: 12px;
-      padding: 16px; overflow-y: auto; font-size: 0.82rem; line-height: 1.5; color: #cbd5e1;
-      white-space: pre-wrap; margin-bottom: 16px;
+      flex: 1; min-height: 0; background: #111827; border: 1px solid #334155; border-radius: 12px;
+      padding: 14px; overflow-y: auto; font-size: 0.8rem; line-height: 1.45; color: #cbd5e1;
+      white-space: pre-wrap; margin-bottom: 12px;
     }
     .consent-check-label {
-      display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #cbd5e1; cursor: pointer;
+      display: flex; align-items: flex-start; gap: 10px; font-size: 0.8rem; color: #cbd5e1; cursor: pointer;
     }
     .consent-check-label input { width: 18px; height: 18px; margin-top: 2px; accent-color: #2563eb; }
 
-    /* 3. PERFIL DE USUARIO */
-    .profile-card { width: 100%; max-width: 380px; text-align: center; }
-    .profile-card h2 { font-size: 1.4rem; margin-bottom: 8px; color: #fff; }
-    .profile-card p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 24px; }
+    /* PERFIL */
+    .profile-card { width: 100%; max-width: 360px; text-align: center; }
+    .profile-card h2 { font-size: 1.3rem; margin-bottom: 8px; color: #fff; }
+    .profile-card p { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; }
     .input-profile {
-      width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 14px;
-      padding: 14px 18px; color: #fff; font-size: 1rem; outline: none; margin-bottom: 16px;
+      width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+      padding: 14px 16px; color: #fff; font-size: 0.95rem; outline: none; margin-bottom: 16px;
     }
-    .input-profile:focus { border-color: #38bdf8; }
 
-    /* APLICACIÓN PRINCIPAL (DRAWER, CHAT, CANCIONES) */
+    /* CONTENEDOR PRINCIPAL DEL CHAT */
+    .main-container {
+      display: flex; flex-direction: column; height: 100%; height: 100dvh; width: 100%; overflow: hidden;
+    }
+    header {
+      flex-shrink: 0; background: #1e293b; padding: 12px 16px; display: flex; align-items: center;
+      gap: 12px; border-bottom: 1px solid #334155; height: 56px;
+    }
+    .menu-btn { background: none; border: none; color: #f8fafc; font-size: 1.3rem; cursor: pointer; }
+    .app-title { font-size: 1rem; font-weight: 600; }
+
+    /* ZONA DE MENSAJES (OCUPA TODO EL ESPACIO RESTANTE) */
+    #chat-box {
+      flex: 1; min-height: 0; overflow-y: auto; padding: 16px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .msg { max-width: 85%; padding: 12px 14px; border-radius: 14px; line-height: 1.4; font-size: 0.9rem; word-break: break-word; }
+    .msg-user { align-self: flex-end; background: #2563eb; color: #fff; border-bottom-right-radius: 2px; }
+    .msg-assistant { align-self: flex-start; background: #334155; color: #f1f5f9; border-bottom-left-radius: 2px; }
+
+    /* FOOTER FIJO ABAJO (NO DESAPARECE NUNCA) */
+    footer {
+      flex-shrink: 0; padding: 10px 14px; background: #1e293b; border-top: 1px solid #334155;
+    }
+    form { display: flex; gap: 8px; align-items: center; width: 100%; }
+    input[type="text"] {
+      flex: 1; background: #0b0f19; border: 1px solid #334155; border-radius: 20px;
+      padding: 10px 16px; color: #f8fafc; font-size: 0.9rem; outline: none;
+    }
+    input[type="text"]:focus { border-color: #38bdf8; }
+    .action-btn {
+      flex-shrink: 0; background: #334155; border: none; color: #fff; border-radius: 50%;
+      width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; font-size: 1rem;
+    }
+    .btn-submit { background: #2563eb; }
+    .recording { background: #ef4444 !important; }
+
+    /* MENÚ LATERAL Y MODAL */
     #drawer {
       position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
       background: #1e293b; transition: left 0.3s ease; z-index: 200;
       display: flex; flex-direction: column; border-right: 1px solid #334155;
     }
     #drawer.open { left: 0; }
-    .drawer-header { padding: 20px; font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid #334155; color: #38bdf8; }
+    .drawer-header { padding: 18px; font-size: 1rem; font-weight: bold; border-bottom: 1px solid #334155; color: #38bdf8; }
     .drawer-menu { list-style: none; padding: 10px 0; flex: 1; }
-    .drawer-menu li a { display: block; padding: 14px 20px; color: #cbd5e1; text-decoration: none; cursor: pointer; font-size: 0.95rem; }
-    .drawer-menu li a:hover { background: #334155; color: #38bdf8; }
+    .drawer-menu li a { display: block; padding: 12px 18px; color: #cbd5e1; text-decoration: none; cursor: pointer; font-size: 0.9rem; }
     #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 150; }
     #overlay.active { display: block; }
 
-    .main-container { flex: 1; display: flex; flex-direction: column; height: 100%; }
-    header { background: #1e293b; padding: 14px 18px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #334155; }
-    .menu-btn { background: none; border: none; color: #f8fafc; font-size: 1.4rem; cursor: pointer; }
-    .app-title { font-size: 1.05rem; font-weight: 600; }
-
-    #chat-box { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-    .msg { max-width: 82%; padding: 12px 16px; border-radius: 14px; line-height: 1.4; font-size: 0.95rem; word-break: break-word; }
-    .msg-user { align-self: flex-end; background: #2563eb; color: #fff; border-bottom-right-radius: 2px; }
-    .msg-assistant { align-self: flex-start; background: #334155; color: #f1f5f9; border-bottom-left-radius: 2px; }
-
-    footer { padding: 12px; background: #1e293b; border-top: 1px solid #334155; }
-    form { display: flex; gap: 8px; align-items: center; }
-    input[type="text"] {
-      flex: 1; background: #0b0f19; border: 1px solid #334155; border-radius: 24px;
-      padding: 12px 18px; color: #f8fafc; font-size: 0.95rem; outline: none;
-    }
-    input[type="text"]:focus { border-color: #38bdf8; }
-    .action-btn {
-      background: #334155; border: none; color: #fff; border-radius: 50%;
-      width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center;
-      justify-content: center; font-size: 1.1rem; transition: background 0.2s;
-    }
-    .btn-submit { background: #2563eb; }
-    .recording { background: #ef4444 !important; animation: pulse 1.2s infinite; }
-
-    /* MODAL DE VIDEOS / CANCIONES */
     #video-modal {
-      display: none; position: fixed; inset: 0; z-index: 300;
-      background: #121212; flex-direction: column; height: 100%;
+      display: none; position: fixed; inset: 0; z-index: 300; background: #121212;
+      flex-direction: column; height: 100dvh;
     }
     #video-modal.active { display: flex; }
-    .video-header { background: #1e1e1e; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #272727; }
-    .video-header h2 { font-size: 1.05rem; color: #fff; }
-    .modal-close { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
-    .player-container { width: 100%; height: 230px; background: #000; }
+    .video-header { background: #1e1e1e; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .modal-close { background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
+    .player-container { width: 100%; height: 210px; background: #000; flex-shrink: 0; }
     .player-container iframe { width: 100%; height: 100%; border: none; }
-    .track-info { padding: 12px 16px; color: #00E5FF; font-weight: bold; font-size: 0.95rem; background: #181818; border-bottom: 1px solid #272727; }
+    .track-info { padding: 10px 14px; color: #00E5FF; font-weight: bold; font-size: 0.85rem; background: #181818; }
     .song-list { flex: 1; overflow-y: auto; list-style: none; }
-    .song-item { padding: 16px; border-bottom: 1px solid #272727; color: #ffffff; cursor: pointer; font-size: 0.95rem; }
-    .song-item:hover { background: #1e293b; color: #00E5FF; }
-
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    .song-item { padding: 14px; border-bottom: 1px solid #272727; color: #ffffff; cursor: pointer; font-size: 0.85rem; }
   </style>
 </head>
 <body>
 
-  <!-- PANTALLA 1: BIENVENIDA -->
+  <!-- 1. BIENVENIDA -->
   <div id="screen-welcome" class="flow-screen">
     <div class="uz-card-logo"><span class="uz-logo-text">UZ</span></div>
     <h1 class="welcome-title">UNIVERSAL-ZON AI</h1>
@@ -140,12 +144,12 @@
     <p class="brand-tagline">Innovación e Inteligencia Universal</p>
   </div>
 
-  <!-- PANTALLA 2: NORMAS, POLÍTICAS Y CONSENTIMIENTO -->
+  <!-- 2. NORMAS Y POLÍTICAS -->
   <div id="screen-consent" class="flow-screen hidden">
     <div class="legal-container">
       <div class="legal-header">
         <h2>Normas y Políticas de Uso</h2>
-        <p>Revisa y acepta los documentos legales para activar la aplicación.</p>
+        <p>Documentación oficial de THE WHORD'S &amp; UNIVERSAL-ZON LLC</p>
       </div>
       <div class="tab-bar">
         <button id="btn-tab-terms" class="tab-btn active" onclick="mostrarDocumento('terms')">Términos y Condiciones</button>
@@ -154,16 +158,16 @@
       <div id="legal-text-box" class="legal-box"></div>
       <label class="consent-check-label">
         <input type="checkbox" id="check-consent" onchange="verificarAceptacion()">
-        <span>He leído y acepto los Términos y Condiciones y la Política de Privacidad de THE WHORD'S &amp; UNIVERSAL-ZON LLC.</span>
+        <span>Confirmo que he leído y acepto los Términos y la Política de Privacidad de THE WHORD'S &amp; UNIVERSAL-ZON LLC.</span>
       </label>
       <button id="btn-accept-consent" class="btn-flow" disabled onclick="guardarConsentimiento()">Aceptar y Continuar</button>
     </div>
   </div>
 
-  <!-- PANTALLA 3: PERFIL DE USUARIO -->
+  <!-- 3. PERFIL -->
   <div id="screen-profile" class="flow-screen hidden">
     <div class="profile-card">
-      <div class="uz-card-logo" style="margin: 0 auto 20px;"><span class="uz-logo-text">👤</span></div>
+      <div class="uz-card-logo" style="margin: 0 auto 16px;"><span class="uz-logo-text">👤</span></div>
       <h2>Perfil de Usuario</h2>
       <p>¿Cómo deseas que te llame Alias (Coco)?</p>
       <input type="text" id="input-username" class="input-profile" placeholder="Escribe tu nombre o apodo..." autocomplete="off">
@@ -171,7 +175,7 @@
     </div>
   </div>
 
-  <!-- APLICACIÓN PRINCIPAL (CHAT Y MENÚ) -->
+  <!-- 4. CHAT PRINCIPAL -->
   <div id="overlay" onclick="toggleMenu()"></div>
 
   <nav id="drawer">
@@ -179,8 +183,8 @@
     <ul class="drawer-menu">
       <li><a onclick="toggleMenu()">💬 Chat con Coco</a></li>
       <li><a onclick="abrirVideos()">🎬 Canciones y Videos Oficiales</a></li>
-      <li><a onclick="abrirEditarPerfil()">👤 Editar Perfil</a></li>
-      <li><a onclick="abrirConsultarLegal()">📜 Consultar Normas y Políticas</a></li>
+      <li><a onclick="abrirEditarPerfil()">👤 Cambiar Nombre</a></li>
+      <li><a onclick="abrirConsultarLegal()">📜 Ver Términos y Normas</a></li>
     </ul>
   </nav>
 
@@ -190,7 +194,7 @@
       <button class="modal-close" onclick="cerrarVideos()">✕</button>
     </div>
     <div class="player-container">
-      <iframe id="video-frame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe id="video-frame" src="" allowfullscreen></iframe>
     </div>
     <div class="track-info" id="tvCurrentTrack">Selecciona un tema:</div>
     <ul class="song-list" id="lvCanciones"></ul>
@@ -207,58 +211,45 @@
     <footer>
       <form id="chat-form" onsubmit="enviarMensaje(event)">
         <button type="button" id="btn-mic" class="action-btn" onclick="iniciarDictadoPorVoz()" title="Hablar con Coco">🎤</button>
-        <input type="text" id="user-input" placeholder="Habla ahora con Alias (Coco)..." autocomplete="off" required>
+        <input type="text" id="user-input" placeholder="Escribe un mensaje o habla..." autocomplete="off" required>
         <button type="submit" class="action-btn btn-submit">➤</button>
       </form>
     </footer>
   </div>
 
   <script>
-    // DOCUMENTOS LEGALES (LegalDocuments.kt)
-    const LEGAL_TERMS = `BORRADOR PARA REVISIÓN LEGAL
-TÉRMINOS Y CONDICIONES
+    const LEGAL_TERMS = `TÉRMINOS Y CONDICIONES OFICIALES
 UNIVERSAL-ZON AI
-Operador indicado: THE WHORD'S & UNIVERSAL-ZON LLC
+Operador: THE WHORD'S & UNIVERSAL-ZON LLC
 Contacto: Kether@the-univerzal-zon.company
 WhatsApp Business: +1 408-627-9350
-Sitio: https://the-univerzal-zon.company
-GitHub: https://github.com/THE-WHORD-S-UNIVERZAL-ZON
-Dirección: 1464 Chiplay Rd, San Jose, California.
+Sitio Web: https://the-univerzal-zon.company
+Sede: 1464 Chiplay Rd, San Jose, California.
 
-1. ACEPTACIÓN
-Estos términos constituyen las bases de uso del sistema. Al aceptar, el usuario confirma que tuvo oportunidad de revisarlos y acepta las normas establecidas.
+1. ACEPTACIÓN DE CONDICIONES
+Al utilizar la plataforma UNIVERSAL-ZON AI, el usuario reconoce y acepta plenamente las presentes condiciones de uso y directrices operativas.
 
-2. SERVICIO
-UNIVERSAL-ZON AI se desarrolla como interfaz de inteligencia artificial que ofrece conversación con modelos integrados y acceso a contenidos audiovisuales oficiales.
+2. SERVICIOS Y MULTIMEDIA
+La plataforma integra procesamiento de asistencia inteligente, dictado por voz y acceso a material audiovisual oficial propiedad de la empresa.
 
 3. USO RESPONSABLE
-El usuario debe utilizar la aplicación de forma lícita, sin comprometer la seguridad ni distribuir código malicioso.
+Queda estrictamente prohibido utilizar la plataforma para fines ilícitos, vulnerar la integridad de los sistemas o difundir contenido malicioso.
 
-4. RESPUESTAS DE IA
-Las respuestas se generan automáticamente y no sustituyen asesoramiento profesional legal, médico o financiero.
+4. DERECHOS DE PROPIEDAD INTELECTUAL
+Todas las marcas, software, logotipos y obras musicales de THE WHORD'S & UNIVERSAL-ZON LLC están debidamente protegidos por las leyes de propiedad intelectual correspondientes.`;
 
-5. PROPIEDAD INTELECTUAL
-Los elementos propios de la marca THE WHORD'S & UNIVERSAL-ZON LLC, interfaz y contenidos musicales pertenecen a sus respectivos titulares.`;
-
-    const LEGAL_PRIVACY = `BORRADOR PARA REVISIÓN LEGAL
-POLÍTICA DE PRIVACIDAD
+    const LEGAL_PRIVACY = `POLÍTICA DE PRIVACIDAD
 UNIVERSAL-ZON AI
-Operador indicado: THE WHORD'S & UNIVERSAL-ZON LLC
-Correo: Kether@the-univerzal-zon.company
-WhatsApp Business: +1 408-627-9350
-Sitio: https://the-univerzal-zon.company
-Dirección: 1464 Chiplay Rd, San Jose, California.
+Operador: THE WHORD'S & UNIVERSAL-ZON LLC
+Contacto: Kether@the-univerzal-zon.company
+Sede: 1464 Chiplay Rd, San Jose, California.
 
-1. ALCANCE
-Describe el tratamiento de información en la aplicación e interfaz web.
+1. TRATAMIENTO DE DATOS LOCAL
+Toda la información referente a nombres de usuario, preferencias y registros de aceptación se almacena de forma segura y directa en el almacenamiento local del dispositivo.
 
-2. DATOS QUE SE TRATAN LOCALMENTE
-Las preferencias de usuario, nombre asignado y la confirmación de consentimiento se almacenan en el almacenamiento local del dispositivo.
+2. CONFIDENCIALIDAD
+No se comercializan ni transfieren datos personales a terceros. Se aplican estándares rigurosos de protección de acuerdo con la legislación de privacidad de California.`;
 
-3. PRIVACIDAD EN CALIFORNIA
-Se respetan los principios aplicables a la privacidad y el control de datos personales.`;
-
-    // 22 CANCIONES Y VIDEOS OFICIALES
     const listaCanciones = [
       { titulo: "Tiraera pa Maldo El virao Del Barrio", id: "l5hTulztOlw" },
       { titulo: "Tiraera pa YOVNGCHIMI Código De Calle", id: "tDORNG7WYKQ" },
@@ -284,11 +275,9 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
       { titulo: "H.D.M Sanguinarios", id: "_sWIU81myhk" }
     ];
 
-    // GESTIÓN DE FLUJO (ONBOARDING)
     window.addEventListener('DOMContentLoaded', () => {
       const consentimiento = localStorage.getItem('uz_consent_accepted');
       const usuario = localStorage.getItem('uz_user_name');
-
       if (consentimiento && usuario) {
         ocultarTodoElFlujo();
         iniciarApp(usuario);
@@ -336,8 +325,7 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
     }
 
     function guardarPerfil() {
-      const nombreInput = document.getElementById('input-username').value.trim();
-      const nombre = nombreInput || "Usuario";
+      const nombre = document.getElementById('input-username').value.trim() || "Kevin";
       localStorage.setItem('uz_user_name', nombre);
       ocultarTodoElFlujo();
       iniciarApp(nombre);
@@ -348,8 +336,7 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
       const chatBox = document.getElementById('chat-box');
       chatBox.innerHTML = '';
 
-      const mensajeInicial = `¡Hola, ${nombre}! Bienvenido a Universal-Zon AI. Soy Alias (Coco). Todas las normas han sido aceptadas. Puedes escribirme, pulsar el micrófono para hablar o pedirme tus canciones oficiales.`;
-      
+      const mensajeInicial = `¡Hola, ${nombre}! Bienvenido a Universal-Zon AI. Puedes escribirme abajo o tocar el micrófono para hablar.`;
       const aiBubble = document.createElement('div');
       aiBubble.className = 'msg msg-assistant';
       aiBubble.textContent = mensajeInicial;
@@ -370,7 +357,6 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
       verificarAceptacion();
     }
 
-    // MENÚ LATERAL Y VIDEOS
     function toggleMenu() {
       document.getElementById('drawer').classList.toggle('open');
       document.getElementById('overlay').classList.toggle('active');
@@ -407,7 +393,6 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
       document.getElementById('video-frame').src = `https://www.youtube.com/embed/${cancion.id}?autoplay=1`;
     }
 
-    // VOZ DE COCO (TTS)
     function hablarCoco(texto) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
@@ -417,7 +402,6 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
       window.speechSynthesis.speak(u);
     }
 
-    // DICTADO POR VOZ
     let recognition;
     const btnMic = document.getElementById('btn-mic');
     const input = document.getElementById('user-input');
@@ -437,11 +421,10 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
     }
 
     function iniciarDictadoPorVoz() {
-      if (!recognition) return alert("Dictado por voz no disponible en este navegador.");
+      if (!recognition) return alert("Dictado por voz no disponible.");
       try { recognition.start(); } catch(e) { recognition.stop(); }
     }
 
-    // GESTIÓN DE CHAT
     function enviarMensaje(e) {
       e.preventDefault();
       const box = document.getElementById('chat-box');
@@ -458,16 +441,16 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
       const coincidencia = listaCanciones.find(c => txt.toLowerCase().includes(c.titulo.toLowerCase().split(' ')[0]));
 
       setTimeout(() => {
-        let respuesta = "Te he escuchado.";
+        let respuesta = "Te he recibido.";
         if (txt.toLowerCase().includes("video") || txt.toLowerCase().includes("cancion") || txt.toLowerCase().includes("musica")) {
-          respuesta = "Abriendo el reproductor con tus temas oficiales.";
+          respuesta = "Abriendo el reproductor oficial.";
           abrirVideos();
         } else if (coincidencia) {
           respuesta = `Reproduciendo ahora: ${coincidencia.titulo}.`;
           abrirVideos();
           reproducirTema(coincidencia);
         } else {
-          respuesta = `Entendido. Todo el sistema está configurado y funcionando.`;
+          respuesta = "Mensaje procesado. Todo el sistema está sincronizado.";
         }
 
         const aiBubble = document.createElement('div');
@@ -476,7 +459,7 @@ Se respetan los principios aplicables a la privacidad y el control de datos pers
         box.appendChild(aiBubble);
         box.scrollTop = box.scrollHeight;
         hablarCoco(respuesta);
-      }, 500);
+      }, 400);
     }
   </script>
 </body>
