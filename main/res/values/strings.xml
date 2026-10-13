@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UNIVERSAL-ZON AI</string>
+    <string name="brand_full_name">"UNIVERSAL-ZON AI, by THE WHORD'S &amp; UNIVERSAL-ZON LLC"</string>
+    <string name="brand_company">"THE WHORD'S &amp; UNIVERSAL-ZON LLC"</string>
+    <string name="brand_tagline">Inteligencia sin límites.</string>
+    <string name="nav_chat">Chat</string>
+    <string name="nav_history">Historial</string>
+    <string name="nav_model">Modelo</string>
+    <string name="nav_settings">Ajustes</string>
+    <string name="nav_legal">Legal</string>
+    <string name="action_new_chat">Nueva conversación</string>
+    <string name="action_select_model">Seleccionar modelo GGUF</string>
+    <string name="status_model_missing">Modelo no seleccionado</string>
+    <string name="status_model_ready">Modelo listo</string>
+    <string name="status_model_loading">Cargando modelo…</string>
+    <string name="chat_input_hint">Escribe tu mensaje…</string>
+    <string name="welcome_headline">Tu inteligencia. Tu universo.</string>
+    <string name="welcome_description">Descubre UNIVERSAL-ZON AI, una experiencia de inteligencia artificial diseñada para acompañarte, ayudarte a crear y explorar nuevas ideas.</string>
+    <string name="welcome_continue">Continuar</string>
+
+    <string name="consent_title">Antes de comenzar</string>
+    <string name="consent_intro">Para usar UNIVERSAL-ZON AI, revisa por separado los términos del servicio y la política de privacidad. Puedes abrir cada documento antes de decidir.</string>
+    <string name="consent_terms_title">Términos y condiciones</string>
+    <string name="consent_terms_summary">Describe las reglas de uso, las responsabilidades, las limitaciones del servicio y las condiciones aplicables.</string>
+    <string name="consent_view_terms">Leer términos y condiciones</string>
+    <string name="consent_terms_accept">He leído y acepto los términos y condiciones.</string>
+    <string name="consent_privacy_title">Política de privacidad</string>
+    <string name="consent_privacy_summary">Explica qué datos pueden procesarse, las opciones de IA local o en línea y cómo se gestionan las conversaciones.</string>
+    <string name="consent_view_privacy">Leer política de privacidad</string>
+    <string name="consent_privacy_accept">He leído y acepto la política de privacidad.</string>
+    <string name="consent_note">Las casillas empiezan desmarcadas. La aceptación solo se registrará cuando confirmes ambas opciones en la aplicación. El documento final debe describir con precisión el almacenamiento local, los servicios en línea y cualquier función en la nube que llegue a habilitarse.</string>
+    <string name="consent_continue">Aceptar y continuar</string>
+    <string name="consent_version_note">Documentos legales sujetos a revisión antes de publicar la aplicación.</string>
+
+    <string name="menu_open">Abrir menú de navegación</string>
+    <string name="menu_title">UNIVERSAL-ZON AI</string>
+    <string name="menu_subtitle">Tu inteligencia. Tu universo.</string>
+    <string name="menu_section_workspace">TU ESPACIO</string>
+    <string name="menu_section_preferences">PREFERENCIAS</string>
+    <string name="menu_section_information">INFORMACIÓN</string>
+    <string name="nav_new_chat">Nueva conversación</string>
+    <string name="nav_storage">Almacenamiento del historial</string>
+    <string name="nav_online_mode">Modo local y en línea</string>
+    <string name="nav_about">Acerca de UNIVERSAL-ZON AI</string>
+
+</resources>

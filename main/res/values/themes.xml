@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.Theme.AiChatSample"
+        parent="Theme.Material3.Dark.NoActionBar">
+
+        <item name="colorPrimary">@color/uz_silver</item>
+        <item name="colorOnPrimary">@color/uz_black</item>
+        <item name="colorPrimaryContainer">@color/uz_surface_elevated</item>
+        <item name="colorOnPrimaryContainer">@color/uz_white</item>
+
+        <item name="colorSecondary">@color/uz_silver_bright</item>
+        <item name="colorOnSecondary">@color/uz_black</item>
+        <item name="colorSecondaryContainer">@color/uz_surface_pressed</item>
+        <item name="colorOnSecondaryContainer">@color/uz_white</item>
+
+        <item name="android:colorBackground">@color/uz_background</item>
+        <item name="colorSurface">@color/uz_surface</item>
+        <item name="colorOnSurface">@color/uz_white</item>
+        <item name="colorSurfaceVariant">@color/uz_surface_elevated</item>
+        <item name="colorOnSurfaceVariant">@color/uz_text_secondary</item>
+        <item name="colorOutline">@color/uz_outline</item>
+
+        <item name="android:statusBarColor">@color/uz_background</item>
+        <item name="android:navigationBarColor">@color/uz_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowBackground">@color/uz_background</item>
+        <item name="android:windowActionModeOverlay">true</item>
+
+    </style>
+
+    <style name="Theme.AiChatSample" parent="Base.Theme.AiChatSample" />
+
+</resources>

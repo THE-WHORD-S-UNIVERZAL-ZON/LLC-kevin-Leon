@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Identidad UNIVERSAL-ZON AI -->
+    <color name="uz_black">#08090B</color>
+    <color name="uz_background">#0B0C0F</color>
+    <color name="uz_surface">#131519</color>
+    <color name="uz_surface_elevated">#1B1E23</color>
+    <color name="uz_surface_pressed">#262A30</color>
+    <color name="uz_silver">#C7CAD0</color>
+    <color name="uz_silver_bright">#E5E7EB</color>
+    <color name="uz_silver_muted">#858A94</color>
+    <color name="uz_white">#F7F7F8</color>
+    <color name="uz_text_secondary">#A6AAB3</color>
+    <color name="uz_outline">#383C44</color>
+    <color name="uz_success">#A8C7B0</color>
+    <color name="uz_warning">#E3C58B</color>
+    <color name="uz_error">#F0A5A5</color>
+
+    <!-- Compatibilidad con los recursos existentes -->
+    <color name="purple_200">#FFC7CAD0</color>
+    <color name="purple_500">#FFC7CAD0</color>
+    <color name="purple_700">#FF858A94</color>
+    <color name="teal_200">#FFE5E7EB</color>
+    <color name="teal_700">#FF858A94</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
