@@ -22,9 +22,10 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
     .uz-logo-text { font-size: 1.8rem; font-weight: 800; color: #e2e8f0; letter-spacing: 2px; }
-    .welcome-title { font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-top: 20px; text-align: center; }
-    .welcome-company { font-size: 0.8rem; color: #94a3b8; margin-top: 6px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-    .welcome-divider { width: 48px; height: 2px; background: #475569; margin: 18px 0; }
+    .welcome-title { font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-top: 18px; text-align: center; }
+    .welcome-company { font-size: 0.85rem; color: #94a3b8; margin-top: 6px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+    .welcome-owner { font-size: 0.85rem; color: #38bdf8; margin-top: 4px; font-weight: 600; text-align: center; }
+    .welcome-divider { width: 48px; height: 2px; background: #475569; margin: 16px 0; }
     .welcome-headline { font-size: 1.15rem; font-weight: 700; color: #ffffff; text-align: center; }
     .welcome-desc { font-size: 0.9rem; color: #94a3b8; text-align: center; margin-top: 10px; line-height: 1.4; max-width: 360px; }
     .btn-flow {
@@ -40,6 +41,7 @@
     .legal-header { text-align: center; margin-bottom: 12px; }
     .legal-header h2 { font-size: 1.2rem; color: #fff; }
     .legal-header p { font-size: 0.8rem; color: #94a3b8; }
+    .legal-header .owner-badge { color: #38bdf8; font-weight: 600; font-size: 0.82rem; margin-top: 2px; }
     .tab-bar { display: flex; gap: 8px; margin-bottom: 10px; }
     .tab-btn {
       flex: 1; padding: 10px; background: #1e293b; border: 1px solid #334155;
@@ -65,7 +67,7 @@
       padding: 14px 16px; color: #fff; font-size: 0.95rem; outline: none; margin-bottom: 16px;
     }
 
-    /* CONTENEDOR PRINCIPAL DEL CHAT */
+    /* CHAT PRINCIPAL */
     .main-container {
       display: flex; flex-direction: column; height: 100%; height: 100dvh; width: 100%; overflow: hidden;
     }
@@ -76,7 +78,6 @@
     .menu-btn { background: none; border: none; color: #f8fafc; font-size: 1.3rem; cursor: pointer; }
     .app-title { font-size: 1rem; font-weight: 600; }
 
-    /* ZONA DE MENSAJES (OCUPA TODO EL ESPACIO RESTANTE) */
     #chat-box {
       flex: 1; min-height: 0; overflow-y: auto; padding: 16px;
       display: flex; flex-direction: column; gap: 12px;
@@ -85,7 +86,6 @@
     .msg-user { align-self: flex-end; background: #2563eb; color: #fff; border-bottom-right-radius: 2px; }
     .msg-assistant { align-self: flex-start; background: #334155; color: #f1f5f9; border-bottom-left-radius: 2px; }
 
-    /* FOOTER FIJO ABAJO (NO DESAPARECE NUNCA) */
     footer {
       flex-shrink: 0; padding: 10px 14px; background: #1e293b; border-top: 1px solid #334155;
     }
@@ -103,14 +103,15 @@
     .btn-submit { background: #2563eb; }
     .recording { background: #ef4444 !important; }
 
-    /* MENÚ LATERAL Y MODAL */
+    /* MENÚ LATERAL Y REPRODUCTOR */
     #drawer {
       position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
       background: #1e293b; transition: left 0.3s ease; z-index: 200;
       display: flex; flex-direction: column; border-right: 1px solid #334155;
     }
     #drawer.open { left: 0; }
-    .drawer-header { padding: 18px; font-size: 1rem; font-weight: bold; border-bottom: 1px solid #334155; color: #38bdf8; }
+    .drawer-header { padding: 18px; font-size: 0.95rem; font-weight: bold; border-bottom: 1px solid #334155; color: #38bdf8; }
+    .drawer-header small { display: block; font-size: 0.75rem; color: #94a3b8; font-weight: normal; margin-top: 4px; }
     .drawer-menu { list-style: none; padding: 10px 0; flex: 1; }
     .drawer-menu li a { display: block; padding: 12px 18px; color: #cbd5e1; text-decoration: none; cursor: pointer; font-size: 0.9rem; }
     #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 150; }
@@ -132,11 +133,12 @@
 </head>
 <body>
 
-  <!-- 1. BIENVENIDA -->
+  <!-- 1. PANTALLA DE BIENVENIDA -->
   <div id="screen-welcome" class="flow-screen">
     <div class="uz-card-logo"><span class="uz-logo-text">UZ</span></div>
     <h1 class="welcome-title">UNIVERSAL-ZON AI</h1>
     <p class="welcome-company">THE WHORD'S &amp; UNIVERSAL-ZON LLC</p>
+    <p class="welcome-owner">Owner: Kevin León Atiles</p>
     <div class="welcome-divider"></div>
     <h2 class="welcome-headline">Bienvenido a Universal-Zon AI</h2>
     <p class="welcome-desc">Tu asistente de inteligencia artificial personal con interacción por voz, música oficial y procesamiento seguro.</p>
@@ -144,12 +146,13 @@
     <p class="brand-tagline">Innovación e Inteligencia Universal</p>
   </div>
 
-  <!-- 2. NORMAS Y POLÍTICAS -->
+  <!-- 2. NORMAS Y POLÍTICAS LEGALES -->
   <div id="screen-consent" class="flow-screen hidden">
     <div class="legal-container">
       <div class="legal-header">
         <h2>Normas y Políticas de Uso</h2>
         <p>Documentación oficial de THE WHORD'S &amp; UNIVERSAL-ZON LLC</p>
+        <p class="owner-badge">Owner / Propietario: Kevin León Atiles</p>
       </div>
       <div class="tab-bar">
         <button id="btn-tab-terms" class="tab-btn active" onclick="mostrarDocumento('terms')">Términos y Condiciones</button>
@@ -164,7 +167,7 @@
     </div>
   </div>
 
-  <!-- 3. PERFIL -->
+  <!-- 3. PERFIL DE USUARIO -->
   <div id="screen-profile" class="flow-screen hidden">
     <div class="profile-card">
       <div class="uz-card-logo" style="margin: 0 auto 16px;"><span class="uz-logo-text">👤</span></div>
@@ -175,11 +178,14 @@
     </div>
   </div>
 
-  <!-- 4. CHAT PRINCIPAL -->
+  <!-- 4. MENÚ LATERAL Y CHAT -->
   <div id="overlay" onclick="toggleMenu()"></div>
 
   <nav id="drawer">
-    <div class="drawer-header" id="drawer-welcome-user">Universal-Zon AI</div>
+    <div class="drawer-header" id="drawer-welcome-user">
+      Universal-Zon AI
+      <small>Owner: Kevin León Atiles</small>
+    </div>
     <ul class="drawer-menu">
       <li><a onclick="toggleMenu()">💬 Chat con Coco</a></li>
       <li><a onclick="abrirVideos()">🎬 Canciones y Videos Oficiales</a></li>
@@ -221,34 +227,36 @@
     const LEGAL_TERMS = `TÉRMINOS Y CONDICIONES OFICIALES
 UNIVERSAL-ZON AI
 Operador: THE WHORD'S & UNIVERSAL-ZON LLC
+Owner / Propietario: Kevin León Atiles
 Contacto: Kether@the-univerzal-zon.company
 WhatsApp Business: +1 408-627-9350
 Sitio Web: https://the-univerzal-zon.company
-Sede: 1464 Chiplay Rd, San Jose, California.
+Sede Oficial: 1465 Chiplay Rd, San Jose, California.
 
 1. ACEPTACIÓN DE CONDICIONES
-Al utilizar la plataforma UNIVERSAL-ZON AI, el usuario reconoce y acepta plenamente las presentes condiciones de uso y directrices operativas.
+Al utilizar la plataforma UNIVERSAL-ZON AI, el usuario reconoce y acepta plenamente las presentes condiciones de uso y directrices operativas establecidas por el operador y su propietario legal.
 
 2. SERVICIOS Y MULTIMEDIA
-La plataforma integra procesamiento de asistencia inteligente, dictado por voz y acceso a material audiovisual oficial propiedad de la empresa.
+La plataforma integra procesamiento de asistencia inteligente, interacción por voz y acceso exclusivo al material audiovisual oficial de la compañía.
 
 3. USO RESPONSABLE
-Queda estrictamente prohibido utilizar la plataforma para fines ilícitos, vulnerar la integridad de los sistemas o difundir contenido malicioso.
+Queda estrictamente prohibido utilizar la plataforma para fines ilícitos, vulnerar la integridad de los sistemas o distribuir código malicioso.
 
-4. DERECHOS DE PROPIEDAD INTELECTUAL
-Todas las marcas, software, logotipos y obras musicales de THE WHORD'S & UNIVERSAL-ZON LLC están debidamente protegidos por las leyes de propiedad intelectual correspondientes.`;
+4. PROPIEDAD INTELECTUAL
+Todas las marcas, código fuente, logotipos y obras musicales de THE WHORD'S & UNIVERSAL-ZON LLC son propiedad exclusiva de Kevin León Atiles y se encuentran protegidos por las leyes de propiedad intelectual.`;
 
-    const LEGAL_PRIVACY = `POLÍTICA DE PRIVACIDAD
+    const LEGAL_PRIVACY = `POLÍTICA DE PRIVACIDAD OFICIAL
 UNIVERSAL-ZON AI
 Operador: THE WHORD'S & UNIVERSAL-ZON LLC
+Owner / Propietario: Kevin León Atiles
 Contacto: Kether@the-univerzal-zon.company
-Sede: 1464 Chiplay Rd, San Jose, California.
+Sede Oficial: 1465 Chiplay Rd, San Jose, California.
 
 1. TRATAMIENTO DE DATOS LOCAL
-Toda la información referente a nombres de usuario, preferencias y registros de aceptación se almacena de forma segura y directa en el almacenamiento local del dispositivo.
+Toda la información referente a nombres de usuario, preferencias y registros de consentimiento se almacena de forma segura y directa en el almacenamiento local del dispositivo del usuario.
 
-2. CONFIDENCIALIDAD
-No se comercializan ni transfieren datos personales a terceros. Se aplican estándares rigurosos de protección de acuerdo con la legislación de privacidad de California.`;
+2. CONFIDENCIALIDAD Y SEGURIDAD
+No se comercializan ni transfieren datos personales a terceros sin consentimiento previo. Se aplican estándares de protección conforme a la legislación de privacidad de California.`;
 
     const listaCanciones = [
       { titulo: "Tiraera pa Maldo El virao Del Barrio", id: "l5hTulztOlw" },
@@ -332,7 +340,7 @@ No se comercializan ni transfieren datos personales a terceros. Se aplican está
     }
 
     function iniciarApp(nombre) {
-      document.getElementById('drawer-welcome-user').textContent = `Hola, ${nombre}`;
+      document.getElementById('drawer-welcome-user').innerHTML = `Hola, ${nombre}<small>Owner: Kevin León Atiles</small>`;
       const chatBox = document.getElementById('chat-box');
       chatBox.innerHTML = '';
 
