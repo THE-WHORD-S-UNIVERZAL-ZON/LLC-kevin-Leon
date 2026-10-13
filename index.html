@@ -1,1 +1,194 @@
-<h1>Hola Mundo, mi pagina ya funciona en Cloudflare</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Zon AI - Alias Coco</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #0f172a; color: #f8fafc; display: flex; height: 100vh; overflow: hidden; }
+
+    /* Menú lateral (view_navigation_drawer.xml) */
+    #drawer {
+      position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
+      background: #1e293b; transition: left 0.3s ease; z-index: 100;
+      display: flex; flex-direction: column; border-right: 1px solid #334155;
+    }
+    #drawer.open { left: 0; }
+    .drawer-header { padding: 20px; font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid #334155; }
+    .drawer-menu { list-style: none; padding: 10px 0; flex: 1; }
+    .drawer-menu li a { display: block; padding: 12px 20px; color: #cbd5e1; text-decoration: none; }
+    .drawer-menu li a:hover { background: #334155; color: #38bdf8; }
+    #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; z-index: 90; }
+    #overlay.active { display: block; }
+
+    /* Contenedor principal */
+    .main-container { flex: 1; display: flex; flex-direction: column; height: 100%; }
+
+    /* Barra superior */
+    header {
+      background: #1e293b; padding: 14px 18px; display: flex; align-items: center;
+      gap: 14px; border-bottom: 1px solid #334155;
+    }
+    .menu-btn { background: none; border: none; color: #f8fafc; font-size: 1.4rem; cursor: pointer; }
+    .app-title { font-size: 1.1rem; font-weight: 600; }
+
+    /* Chat */
+    #chat-box { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .msg { max-width: 80%; padding: 12px 16px; border-radius: 14px; line-height: 1.4; font-size: 0.95rem; word-break: break-word; }
+    .msg-user { align-self: flex-end; background: #2563eb; color: #fff; border-bottom-right-radius: 2px; }
+    .msg-assistant { align-self: flex-start; background: #334155; color: #f1f5f9; border-bottom-left-radius: 2px; }
+
+    /* Barra de entrada y botones de acción */
+    footer { padding: 12px; background: #1e293b; border-top: 1px solid #334155; }
+    form { display: flex; gap: 8px; align-items: center; }
+    input[type="text"] {
+      flex: 1; background: #0f172a; border: 1px solid #334155; border-radius: 24px;
+      padding: 12px 18px; color: #f8fafc; font-size: 0.95rem; outline: none;
+    }
+    input[type="text"]:focus { border-color: #38bdf8; }
+    .action-btn {
+      background: #334155; border: none; color: #fff; border-radius: 50%;
+      width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; font-size: 1.1rem; transition: background 0.2s;
+    }
+    .action-btn:hover { background: #475569; }
+    .btn-submit { background: #2563eb; }
+    .btn-submit:hover { background: #1d4ed8; }
+    .recording { background: #ef4444 !important; animation: pulse 1.2s infinite; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="overlay" onclick="toggleMenu()"></div>
+
+  <!-- Menú lateral -->
+  <nav id="drawer">
+    <div class="drawer-header">Universal Zon AI</div>
+    <ul class="drawer-menu">
+      <li><a href="#" onclick="toggleMenu()">💬 Nueva Conversación</a></li>
+      <li><a href="#" onclick="toggleMenu()">👤 Perfil de Usuario</a></li>
+      <li><a href="#" onclick="toggleMenu()">📜 Consentimiento Legal</a></li>
+      <li><a href="#" onclick="toggleMenu()">🎬 Videos y Multimedia</a></li>
+    </ul>
+  </nav>
+
+  <!-- Vista Principal -->
+  <div class="main-container">
+    <header>
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <div class="app-title">Alias (Coco) - Universal Zon AI</div>
+    </header>
+
+    <div id="chat-box">
+      <div class="msg msg-assistant">Hola, soy Alias (Coco). Puedes escribirme o pulsar el micrófono para hablar conmigo.</div>
+    </div>
+
+    <footer>
+      <form id="chat-form" onsubmit="enviarMensaje(event)">
+        <!-- Botón de Micrófono (btn_mic) -->
+        <button type="button" id="btn-mic" class="action-btn" onclick="iniciarDictadoPorVoz()" title="Hablar con Coco">🎤</button>
+        <input type="text" id="user-input" placeholder="Habla ahora con Alias (Coco)..." autocomplete="off" required>
+        <button type="submit" class="action-btn btn-submit">➤</button>
+      </form>
+    </footer>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('drawer').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+
+    // Configuración de Text-to-Speech (Voz de Coco en español)
+    function hablarCoco(texto) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(texto);
+      utterance.lang = 'es-ES';
+      utterance.rate = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Configuración del Dictado por Voz (SpeechRecognition)
+    let recognition;
+    const btnMic = document.getElementById('btn-mic');
+    const input = document.getElementById('user-input');
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.lang = 'es-ES';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => {
+        btnMic.classList.add('recording');
+        input.placeholder = "Escuchando... habla ahora...";
+      };
+
+      recognition.onresult = (event) => {
+        const transcripcion = event.results[0][0].transcript;
+        input.value = transcripcion;
+        btnMic.classList.remove('recording');
+        document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+      };
+
+      recognition.onerror = () => {
+        btnMic.classList.remove('recording');
+        input.placeholder = "Habla ahora con Alias (Coco)...";
+      };
+
+      recognition.onend = () => {
+        btnMic.classList.remove('recording');
+        input.placeholder = "Habla ahora con Alias (Coco)...";
+      };
+    }
+
+    function iniciarDictadoPorVoz() {
+      if (!recognition) {
+        alert("El reconocimiento de voz no está soportado en este navegador.");
+        return;
+      }
+      try {
+        recognition.start();
+      } catch (e) {
+        recognition.stop();
+      }
+    }
+
+    // Manejo del Chat
+    function enviarMensaje(e) {
+      e.preventDefault();
+      const box = document.getElementById('chat-box');
+      const texto = input.value.trim();
+      if (!texto) return;
+
+      const userBubble = document.createElement('div');
+      userBubble.className = 'msg msg-user';
+      userBubble.textContent = texto;
+      box.appendChild(userBubble);
+      input.value = '';
+      box.scrollTop = box.scrollHeight;
+
+      // Respuesta de Alias Coco (con voz activada)
+      setTimeout(() => {
+        const respuesta = "Te he escuchado. La interfaz de voz y texto ya está completamente sincronizada.";
+        const aiBubble = document.createElement('div');
+        aiBubble.className = 'msg msg-assistant';
+        aiBubble.textContent = respuesta;
+        box.appendChild(aiBubble);
+        box.scrollTop = box.scrollHeight;
+
+        hablarCoco(respuesta);
+      }, 500);
+    }
+  </script>
+</body>
+</html>
