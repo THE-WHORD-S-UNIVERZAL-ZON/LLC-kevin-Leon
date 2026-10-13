@@ -8,24 +8,23 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: #0f172a; color: #f8fafc; display: flex; height: 100vh; overflow: hidden; }
 
-    /* Menú lateral (view_navigation_drawer.xml) */
+    /* Menú Lateral (Drawer) */
     #drawer {
       position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
       background: #1e293b; transition: left 0.3s ease; z-index: 100;
       display: flex; flex-direction: column; border-right: 1px solid #334155;
     }
     #drawer.open { left: 0; }
-    .drawer-header { padding: 20px; font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid #334155; }
+    .drawer-header { padding: 20px; font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid #334155; color: #38bdf8; }
     .drawer-menu { list-style: none; padding: 10px 0; flex: 1; }
-    .drawer-menu li a { display: block; padding: 12px 20px; color: #cbd5e1; text-decoration: none; }
+    .drawer-menu li a { display: block; padding: 14px 20px; color: #cbd5e1; text-decoration: none; cursor: pointer; font-size: 0.95rem; }
     .drawer-menu li a:hover { background: #334155; color: #38bdf8; }
-    #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; z-index: 90; }
+    #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 90; }
     #overlay.active { display: block; }
 
-    /* Contenedor principal */
+    /* Vista Principal */
     .main-container { flex: 1; display: flex; flex-direction: column; height: 100%; }
 
-    /* Barra superior */
     header {
       background: #1e293b; padding: 14px 18px; display: flex; align-items: center;
       gap: 14px; border-bottom: 1px solid #334155;
@@ -35,11 +34,11 @@
 
     /* Chat */
     #chat-box { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-    .msg { max-width: 80%; padding: 12px 16px; border-radius: 14px; line-height: 1.4; font-size: 0.95rem; word-break: break-word; }
+    .msg { max-width: 82%; padding: 12px 16px; border-radius: 14px; line-height: 1.4; font-size: 0.95rem; word-break: break-word; }
     .msg-user { align-self: flex-end; background: #2563eb; color: #fff; border-bottom-right-radius: 2px; }
     .msg-assistant { align-self: flex-start; background: #334155; color: #f1f5f9; border-bottom-left-radius: 2px; }
 
-    /* Barra de entrada y botones de acción */
+    /* Footer con voz y texto */
     footer { padding: 12px; background: #1e293b; border-top: 1px solid #334155; }
     form { display: flex; gap: 8px; align-items: center; }
     input[type="text"] {
@@ -52,16 +51,38 @@
       width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center;
       justify-content: center; font-size: 1.1rem; transition: background 0.2s;
     }
-    .action-btn:hover { background: #475569; }
     .btn-submit { background: #2563eb; }
-    .btn-submit:hover { background: #1d4ed8; }
     .recording { background: #ef4444 !important; animation: pulse 1.2s infinite; }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    /* Sección / Modal de Videos y Canciones (Estilo activity_videos.xml) */
+    #video-modal {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: #121212; flex-direction: column; height: 100%;
     }
+    #video-modal.active { display: flex; }
+    .video-header {
+      background: #1e1e1e; padding: 12px 16px; display: flex; justify-content: space-between;
+      align-items: center; border-bottom: 1px solid #272727;
+    }
+    .video-header h2 { font-size: 1.05rem; color: #fff; }
+    .modal-close { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+    .player-container { width: 100%; height: 230px; background: #000; }
+    .player-container iframe { width: 100%; height: 100%; border: none; }
+
+    .track-info {
+      padding: 12px 16px; color: #00E5FF; font-weight: bold; font-size: 0.95rem;
+      background: #181818; border-bottom: 1px solid #272727;
+    }
+
+    .song-list { flex: 1; overflow-y: auto; list-style: none; }
+    .song-item {
+      padding: 16px; border-bottom: 1px solid #272727; color: #ffffff;
+      cursor: pointer; font-size: 0.95rem; transition: background 0.2s;
+    }
+    .song-item:hover, .song-item.active { background: #1e293b; color: #00E5FF; }
+
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
   </style>
 </head>
 <body>
@@ -72,12 +93,25 @@
   <nav id="drawer">
     <div class="drawer-header">Universal Zon AI</div>
     <ul class="drawer-menu">
-      <li><a href="#" onclick="toggleMenu()">💬 Nueva Conversación</a></li>
-      <li><a href="#" onclick="toggleMenu()">👤 Perfil de Usuario</a></li>
-      <li><a href="#" onclick="toggleMenu()">📜 Consentimiento Legal</a></li>
-      <li><a href="#" onclick="toggleMenu()">🎬 Videos y Multimedia</a></li>
+      <li><a onclick="toggleMenu()">💬 Chat con Coco</a></li>
+      <li><a onclick="abrirVideos()">🎬 Canciones y Videos Oficiales</a></li>
+      <li><a onclick="toggleMenu()">👤 Perfil de Usuario</a></li>
+      <li><a onclick="toggleMenu()">📜 Términos y Consentimiento</a></li>
     </ul>
   </nav>
+
+  <!-- Modal de Reproductor y Canciones (activity_videos.xml) -->
+  <div id="video-modal">
+    <div class="video-header">
+      <h2>🎵 Música y Videos Oficiales</h2>
+      <button class="modal-close" onclick="cerrarVideos()">✕</button>
+    </div>
+    <div class="player-container">
+      <iframe id="video-frame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="track-info" id="tvCurrentTrack">Selecciona un tema:</div>
+    <ul class="song-list" id="lvCanciones"></ul>
+  </div>
 
   <!-- Vista Principal -->
   <div class="main-container">
@@ -87,12 +121,11 @@
     </header>
 
     <div id="chat-box">
-      <div class="msg msg-assistant">Hola, soy Alias (Coco). Puedes escribirme o pulsar el micrófono para hablar conmigo.</div>
+      <div class="msg msg-assistant">Hola, soy Alias (Coco). Puedes escribirme, pulsar el micrófono para hablarme, o pedirme que reproduzca cualquiera de tus temas musicales.</div>
     </div>
 
     <footer>
       <form id="chat-form" onsubmit="enviarMensaje(event)">
-        <!-- Botón de Micrófono (btn_mic) -->
         <button type="button" id="btn-mic" class="action-btn" onclick="iniciarDictadoPorVoz()" title="Hablar con Coco">🎤</button>
         <input type="text" id="user-input" placeholder="Habla ahora con Alias (Coco)..." autocomplete="off" required>
         <button type="submit" class="action-btn btn-submit">➤</button>
@@ -101,91 +134,138 @@
   </div>
 
   <script>
+    // Las 22 canciones de tu Canciones.kt
+    const listaCanciones = [
+      { titulo: "Tiraera pa Maldo El virao Del Barrio", id: "l5hTulztOlw" },
+      { titulo: "Tiraera pa YOVNGCHIMI Código De Calle", id: "tDORNG7WYKQ" },
+      { titulo: "Fugitivo Federal", id: "bMMH0iZd360" },
+      { titulo: "Condena", id: "iDbSue1ieU0" },
+      { titulo: "Tiraera pa ZairikEl002 Ni 1 Solo Raund", id: "lZ1BN8PrfJI" },
+      { titulo: "Sombras En La City", id: "vsDy5Aoy9r8" },
+      { titulo: "23 de Abril Don Oculto", id: "vrdP3lpxRTU" },
+      { titulo: "Teach play six6", id: "tWLJIb0F3ew" },
+      { titulo: "La Ferra", id: "pMGtN-dNj-Y" },
+      { titulo: "Guante y Máscaras 🎭", id: "xTuLpplzcj8" },
+      { titulo: "La Ruza", id: "9sdW-Ne9o8Y" },
+      { titulo: "El Género", id: "lkUHqetgC1E" },
+      { titulo: "La Exploradora", id: "VSgsK997iUc" },
+      { titulo: "Tú Tú Tussy Los Punticos", id: "tnsCSckaHp4" },
+      { titulo: "Tiraera pa YOVNGCHIMI, Kendo Kaponi, Taser Trap MetraM1", id: "BvYk6WbvFmo" },
+      { titulo: "Apocalipsis Con Génesis Tiraera pa Kendo Kaponi", id: "uhtBeSzFt-k" },
+      { titulo: "Real Rose & Love Con Espinas", id: "sV6d8FFTFJ0" },
+      { titulo: "Solo Sonriendo", id: "g9fJq7a6rF4" },
+      { titulo: "Yo Contra 'TO", id: "qeDpJBpKnsI" },
+      { titulo: "De Hatillo a Lares", id: "31EfpBL5d1E" },
+      { titulo: "El Contrato", id: "McotBxC9DMs" },
+      { titulo: "H.D.M Sanguinarios", id: "_sWIU81myhk" }
+    ];
+
     function toggleMenu() {
       document.getElementById('drawer').classList.toggle('open');
       document.getElementById('overlay').classList.toggle('active');
     }
 
-    // Configuración de Text-to-Speech (Voz de Coco en español)
+    // Cargar la lista en pantalla
+    function cargarListaCanciones() {
+      const lv = document.getElementById('lvCanciones');
+      lv.innerHTML = '';
+      listaCanciones.forEach((c, idx) => {
+        const li = document.createElement('li');
+        li.className = 'song-item';
+        li.textContent = `${idx + 1}. ${c.titulo}`;
+        li.onclick = () => reproducirTema(c);
+        lv.appendChild(li);
+      });
+    }
+
+    function abrirVideos() {
+      if (document.getElementById('drawer').classList.contains('open')) toggleMenu();
+      cargarListaCanciones();
+      document.getElementById('video-modal').classList.add('active');
+      if (!document.getElementById('video-frame').src && listaCanciones.length > 0) {
+        reproducirTema(listaCanciones[0]);
+      }
+    }
+
+    function cerrarVideos() {
+      document.getElementById('video-modal').classList.remove('active');
+      document.getElementById('video-frame').src = "";
+    }
+
+    function reproducirTema(cancion) {
+      document.getElementById('tvCurrentTrack').textContent = "Reproduciendo: " + cancion.titulo;
+      document.getElementById('video-frame').src = `https://www.youtube.com/embed/${cancion.id}?autoplay=1`;
+    }
+
+    // TTS Coco (Español)
     function hablarCoco(texto) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(texto);
-      utterance.lang = 'es-ES';
-      utterance.rate = 1.0;
-      window.speechSynthesis.speak(utterance);
+      const u = new SpeechSynthesisUtterance(texto);
+      u.lang = 'es-ES';
+      u.rate = 1.0;
+      window.speechSynthesis.speak(u);
     }
 
-    // Configuración del Dictado por Voz (SpeechRecognition)
+    // Dictado por voz
     let recognition;
     const btnMic = document.getElementById('btn-mic');
     const input = document.getElementById('user-input');
 
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SpeechRecognition();
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRec();
       recognition.lang = 'es-ES';
-      recognition.continuous = false;
-      recognition.interimResults = false;
-
-      recognition.onstart = () => {
-        btnMic.classList.add('recording');
-        input.placeholder = "Escuchando... habla ahora...";
-      };
-
-      recognition.onresult = (event) => {
-        const transcripcion = event.results[0][0].transcript;
-        input.value = transcripcion;
+      recognition.onstart = () => { btnMic.classList.add('recording'); };
+      recognition.onresult = (e) => {
+        input.value = e.results[0][0].transcript;
         btnMic.classList.remove('recording');
         document.getElementById('chat-form').dispatchEvent(new Event('submit'));
       };
-
-      recognition.onerror = () => {
-        btnMic.classList.remove('recording');
-        input.placeholder = "Habla ahora con Alias (Coco)...";
-      };
-
-      recognition.onend = () => {
-        btnMic.classList.remove('recording');
-        input.placeholder = "Habla ahora con Alias (Coco)...";
-      };
+      recognition.onend = () => { btnMic.classList.remove('recording'); };
+      recognition.onerror = () => { btnMic.classList.remove('recording'); };
     }
 
     function iniciarDictadoPorVoz() {
-      if (!recognition) {
-        alert("El reconocimiento de voz no está soportado en este navegador.");
-        return;
-      }
-      try {
-        recognition.start();
-      } catch (e) {
-        recognition.stop();
-      }
+      if (!recognition) return alert("Reconocimiento de voz no soportado.");
+      try { recognition.start(); } catch(e) { recognition.stop(); }
     }
 
-    // Manejo del Chat
+    // Chat interactivo con detección de canciones
     function enviarMensaje(e) {
       e.preventDefault();
       const box = document.getElementById('chat-box');
-      const texto = input.value.trim();
-      if (!texto) return;
+      const txt = input.value.trim();
+      if (!txt) return;
 
       const userBubble = document.createElement('div');
       userBubble.className = 'msg msg-user';
-      userBubble.textContent = texto;
+      userBubble.textContent = txt;
       box.appendChild(userBubble);
       input.value = '';
       box.scrollTop = box.scrollHeight;
 
-      // Respuesta de Alias Coco (con voz activada)
+      // Detectar si el usuario pide reproducir una canción por voz o texto
+      const coincidencia = listaCanciones.find(c => txt.toLowerCase().includes(c.titulo.toLowerCase().split(' ')[0]));
+
       setTimeout(() => {
-        const respuesta = "Te he escuchado. La interfaz de voz y texto ya está completamente sincronizada.";
+        let respuesta = "Te he escuchado.";
+        if (txt.toLowerCase().includes("video") || txt.toLowerCase().includes("cancion") || txt.toLowerCase().includes("musica")) {
+          respuesta = "Abriendo tu lista de canciones y videos oficiales.";
+          abrirVideos();
+        } else if (coincidencia) {
+          respuesta = `Reproduciendo ahora: ${coincidencia.titulo}.`;
+          abrirVideos();
+          reproducirTema(coincidencia);
+        } else {
+          respuesta = "Entendido. La interfaz completa con tus 22 canciones, reproductor y voz de Coco está activa.";
+        }
+
         const aiBubble = document.createElement('div');
         aiBubble.className = 'msg msg-assistant';
         aiBubble.textContent = respuesta;
         box.appendChild(aiBubble);
         box.scrollTop = box.scrollHeight;
-
         hablarCoco(respuesta);
       }, 500);
     }
