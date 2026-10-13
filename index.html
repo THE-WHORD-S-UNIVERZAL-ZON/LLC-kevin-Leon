@@ -3,15 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Universal Zon AI - Alias Coco</title>
+  <title>Universal-Zon AI - THE WHORD'S & UNIVERSAL-ZON LLC</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #0f172a; color: #f8fafc; display: flex; height: 100vh; overflow: hidden; }
+    body { background-color: #0b0f19; color: #f8fafc; height: 100vh; overflow: hidden; display: flex; }
 
-    /* Menú Lateral (Drawer) */
+    /* PANTALLAS DE FLUJO INICIAL (OVERLAYS) */
+    .flow-screen {
+      position: fixed; inset: 0; background: #0b0f19; z-index: 500;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 24px; overflow-y: auto;
+    }
+    .flow-screen.hidden { display: none; }
+
+    /* 1. BIENVENIDA (activity_welcome.xml) */
+    .uz-card-logo {
+      width: 88px; height: 88px; background: #1e293b; border-radius: 24px;
+      border: 1px solid #334155; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .uz-logo-text { font-size: 2rem; font-weight: 800; color: #e2e8f0; letter-spacing: 2px; }
+    .welcome-title { font-size: 1.7rem; font-weight: 700; color: #ffffff; margin-top: 24px; text-align: center; }
+    .welcome-company { font-size: 0.85rem; color: #94a3b8; margin-top: 8px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+    .welcome-divider { width: 56px; height: 2px; background: #475569; margin: 24px 0; }
+    .welcome-headline { font-size: 1.25rem; font-weight: 700; color: #ffffff; text-align: center; }
+    .welcome-desc { font-size: 0.95rem; color: #94a3b8; text-align: center; margin-top: 12px; line-height: 1.5; max-width: 380px; }
+    .btn-flow {
+      width: 100%; max-width: 380px; height: 54px; background: #e2e8f0; color: #0b0f19;
+      border: none; border-radius: 16px; font-size: 1rem; font-weight: 700; cursor: pointer;
+      margin-top: 32px; transition: background 0.2s;
+    }
+    .btn-flow:hover { background: #ffffff; }
+    .btn-flow:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+    .brand-tagline { font-size: 0.8rem; color: #64748b; margin-top: 20px; }
+
+    /* 2. CONSENTIMIENTO Y POLÍTICAS (LegalDocuments.kt) */
+    .legal-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; height: 90vh; }
+    .legal-header { text-align: center; margin-bottom: 16px; }
+    .legal-header h2 { font-size: 1.3rem; color: #fff; }
+    .legal-header p { font-size: 0.85rem; color: #94a3b8; margin-top: 4px; }
+    .tab-bar { display: flex; gap: 8px; margin-bottom: 12px; }
+    .tab-btn {
+      flex: 1; padding: 10px; background: #1e293b; border: 1px solid #334155;
+      color: #94a3b8; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
+    }
+    .tab-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+    .legal-box {
+      flex: 1; background: #111827; border: 1px solid #334155; border-radius: 12px;
+      padding: 16px; overflow-y: auto; font-size: 0.82rem; line-height: 1.5; color: #cbd5e1;
+      white-space: pre-wrap; margin-bottom: 16px;
+    }
+    .consent-check-label {
+      display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: #cbd5e1; cursor: pointer;
+    }
+    .consent-check-label input { width: 18px; height: 18px; margin-top: 2px; accent-color: #2563eb; }
+
+    /* 3. PERFIL DE USUARIO */
+    .profile-card { width: 100%; max-width: 380px; text-align: center; }
+    .profile-card h2 { font-size: 1.4rem; margin-bottom: 8px; color: #fff; }
+    .profile-card p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 24px; }
+    .input-profile {
+      width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 14px;
+      padding: 14px 18px; color: #fff; font-size: 1rem; outline: none; margin-bottom: 16px;
+    }
+    .input-profile:focus { border-color: #38bdf8; }
+
+    /* APLICACIÓN PRINCIPAL (DRAWER, CHAT, CANCIONES) */
     #drawer {
       position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
-      background: #1e293b; transition: left 0.3s ease; z-index: 100;
+      background: #1e293b; transition: left 0.3s ease; z-index: 200;
       display: flex; flex-direction: column; border-right: 1px solid #334155;
     }
     #drawer.open { left: 0; }
@@ -19,30 +79,23 @@
     .drawer-menu { list-style: none; padding: 10px 0; flex: 1; }
     .drawer-menu li a { display: block; padding: 14px 20px; color: #cbd5e1; text-decoration: none; cursor: pointer; font-size: 0.95rem; }
     .drawer-menu li a:hover { background: #334155; color: #38bdf8; }
-    #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 90; }
+    #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 150; }
     #overlay.active { display: block; }
 
-    /* Vista Principal */
     .main-container { flex: 1; display: flex; flex-direction: column; height: 100%; }
-
-    header {
-      background: #1e293b; padding: 14px 18px; display: flex; align-items: center;
-      gap: 14px; border-bottom: 1px solid #334155;
-    }
+    header { background: #1e293b; padding: 14px 18px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #334155; }
     .menu-btn { background: none; border: none; color: #f8fafc; font-size: 1.4rem; cursor: pointer; }
-    .app-title { font-size: 1.1rem; font-weight: 600; }
+    .app-title { font-size: 1.05rem; font-weight: 600; }
 
-    /* Chat */
     #chat-box { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
     .msg { max-width: 82%; padding: 12px 16px; border-radius: 14px; line-height: 1.4; font-size: 0.95rem; word-break: break-word; }
     .msg-user { align-self: flex-end; background: #2563eb; color: #fff; border-bottom-right-radius: 2px; }
     .msg-assistant { align-self: flex-start; background: #334155; color: #f1f5f9; border-bottom-left-radius: 2px; }
 
-    /* Footer con voz y texto */
     footer { padding: 12px; background: #1e293b; border-top: 1px solid #334155; }
     form { display: flex; gap: 8px; align-items: center; }
     input[type="text"] {
-      flex: 1; background: #0f172a; border: 1px solid #334155; border-radius: 24px;
+      flex: 1; background: #0b0f19; border: 1px solid #334155; border-radius: 24px;
       padding: 12px 18px; color: #f8fafc; font-size: 0.95rem; outline: none;
     }
     input[type="text"]:focus { border-color: #38bdf8; }
@@ -54,53 +107,83 @@
     .btn-submit { background: #2563eb; }
     .recording { background: #ef4444 !important; animation: pulse 1.2s infinite; }
 
-    /* Sección / Modal de Videos y Canciones (Estilo activity_videos.xml) */
+    /* MODAL DE VIDEOS / CANCIONES */
     #video-modal {
-      display: none; position: fixed; inset: 0; z-index: 200;
+      display: none; position: fixed; inset: 0; z-index: 300;
       background: #121212; flex-direction: column; height: 100%;
     }
     #video-modal.active { display: flex; }
-    .video-header {
-      background: #1e1e1e; padding: 12px 16px; display: flex; justify-content: space-between;
-      align-items: center; border-bottom: 1px solid #272727;
-    }
+    .video-header { background: #1e1e1e; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #272727; }
     .video-header h2 { font-size: 1.05rem; color: #fff; }
     .modal-close { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
-
     .player-container { width: 100%; height: 230px; background: #000; }
     .player-container iframe { width: 100%; height: 100%; border: none; }
-
-    .track-info {
-      padding: 12px 16px; color: #00E5FF; font-weight: bold; font-size: 0.95rem;
-      background: #181818; border-bottom: 1px solid #272727;
-    }
-
+    .track-info { padding: 12px 16px; color: #00E5FF; font-weight: bold; font-size: 0.95rem; background: #181818; border-bottom: 1px solid #272727; }
     .song-list { flex: 1; overflow-y: auto; list-style: none; }
-    .song-item {
-      padding: 16px; border-bottom: 1px solid #272727; color: #ffffff;
-      cursor: pointer; font-size: 0.95rem; transition: background 0.2s;
-    }
-    .song-item:hover, .song-item.active { background: #1e293b; color: #00E5FF; }
+    .song-item { padding: 16px; border-bottom: 1px solid #272727; color: #ffffff; cursor: pointer; font-size: 0.95rem; }
+    .song-item:hover { background: #1e293b; color: #00E5FF; }
 
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
   </style>
 </head>
 <body>
 
+  <!-- PANTALLA 1: BIENVENIDA -->
+  <div id="screen-welcome" class="flow-screen">
+    <div class="uz-card-logo"><span class="uz-logo-text">UZ</span></div>
+    <h1 class="welcome-title">UNIVERSAL-ZON AI</h1>
+    <p class="welcome-company">THE WHORD'S &amp; UNIVERSAL-ZON LLC</p>
+    <div class="welcome-divider"></div>
+    <h2 class="welcome-headline">Bienvenido a Universal-Zon AI</h2>
+    <p class="welcome-desc">Tu asistente de inteligencia artificial personal con interacción por voz, música oficial y procesamiento seguro.</p>
+    <button class="btn-flow" onclick="irAConsentimiento()">Continuar</button>
+    <p class="brand-tagline">Innovación e Inteligencia Universal</p>
+  </div>
+
+  <!-- PANTALLA 2: NORMAS, POLÍTICAS Y CONSENTIMIENTO -->
+  <div id="screen-consent" class="flow-screen hidden">
+    <div class="legal-container">
+      <div class="legal-header">
+        <h2>Normas y Políticas de Uso</h2>
+        <p>Revisa y acepta los documentos legales para activar la aplicación.</p>
+      </div>
+      <div class="tab-bar">
+        <button id="btn-tab-terms" class="tab-btn active" onclick="mostrarDocumento('terms')">Términos y Condiciones</button>
+        <button id="btn-tab-privacy" class="tab-btn" onclick="mostrarDocumento('privacy')">Política de Privacidad</button>
+      </div>
+      <div id="legal-text-box" class="legal-box"></div>
+      <label class="consent-check-label">
+        <input type="checkbox" id="check-consent" onchange="verificarAceptacion()">
+        <span>He leído y acepto los Términos y Condiciones y la Política de Privacidad de THE WHORD'S &amp; UNIVERSAL-ZON LLC.</span>
+      </label>
+      <button id="btn-accept-consent" class="btn-flow" disabled onclick="guardarConsentimiento()">Aceptar y Continuar</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA 3: PERFIL DE USUARIO -->
+  <div id="screen-profile" class="flow-screen hidden">
+    <div class="profile-card">
+      <div class="uz-card-logo" style="margin: 0 auto 20px;"><span class="uz-logo-text">👤</span></div>
+      <h2>Perfil de Usuario</h2>
+      <p>¿Cómo deseas que te llame Alias (Coco)?</p>
+      <input type="text" id="input-username" class="input-profile" placeholder="Escribe tu nombre o apodo..." autocomplete="off">
+      <button class="btn-flow" onclick="guardarPerfil()">Comenzar experiencia</button>
+    </div>
+  </div>
+
+  <!-- APLICACIÓN PRINCIPAL (CHAT Y MENÚ) -->
   <div id="overlay" onclick="toggleMenu()"></div>
 
-  <!-- Menú lateral -->
   <nav id="drawer">
-    <div class="drawer-header">Universal Zon AI</div>
+    <div class="drawer-header" id="drawer-welcome-user">Universal-Zon AI</div>
     <ul class="drawer-menu">
       <li><a onclick="toggleMenu()">💬 Chat con Coco</a></li>
       <li><a onclick="abrirVideos()">🎬 Canciones y Videos Oficiales</a></li>
-      <li><a onclick="toggleMenu()">👤 Perfil de Usuario</a></li>
-      <li><a onclick="toggleMenu()">📜 Términos y Consentimiento</a></li>
+      <li><a onclick="abrirEditarPerfil()">👤 Editar Perfil</a></li>
+      <li><a onclick="abrirConsultarLegal()">📜 Consultar Normas y Políticas</a></li>
     </ul>
   </nav>
 
-  <!-- Modal de Reproductor y Canciones (activity_videos.xml) -->
   <div id="video-modal">
     <div class="video-header">
       <h2>🎵 Música y Videos Oficiales</h2>
@@ -113,16 +196,13 @@
     <ul class="song-list" id="lvCanciones"></ul>
   </div>
 
-  <!-- Vista Principal -->
   <div class="main-container">
     <header>
       <button class="menu-btn" onclick="toggleMenu()">☰</button>
-      <div class="app-title">Alias (Coco) - Universal Zon AI</div>
+      <div class="app-title">Alias (Coco) - Universal-Zon AI</div>
     </header>
 
-    <div id="chat-box">
-      <div class="msg msg-assistant">Hola, soy Alias (Coco). Puedes escribirme, pulsar el micrófono para hablarme, o pedirme que reproduzca cualquiera de tus temas musicales.</div>
-    </div>
+    <div id="chat-box"></div>
 
     <footer>
       <form id="chat-form" onsubmit="enviarMensaje(event)">
@@ -134,7 +214,51 @@
   </div>
 
   <script>
-    // Las 22 canciones de tu Canciones.kt
+    // DOCUMENTOS LEGALES (LegalDocuments.kt)
+    const LEGAL_TERMS = `BORRADOR PARA REVISIÓN LEGAL
+TÉRMINOS Y CONDICIONES
+UNIVERSAL-ZON AI
+Operador indicado: THE WHORD'S & UNIVERSAL-ZON LLC
+Contacto: Kether@the-univerzal-zon.company
+WhatsApp Business: +1 408-627-9350
+Sitio: https://the-univerzal-zon.company
+GitHub: https://github.com/THE-WHORD-S-UNIVERZAL-ZON
+Dirección: 1464 Chiplay Rd, San Jose, California.
+
+1. ACEPTACIÓN
+Estos términos constituyen las bases de uso del sistema. Al aceptar, el usuario confirma que tuvo oportunidad de revisarlos y acepta las normas establecidas.
+
+2. SERVICIO
+UNIVERSAL-ZON AI se desarrolla como interfaz de inteligencia artificial que ofrece conversación con modelos integrados y acceso a contenidos audiovisuales oficiales.
+
+3. USO RESPONSABLE
+El usuario debe utilizar la aplicación de forma lícita, sin comprometer la seguridad ni distribuir código malicioso.
+
+4. RESPUESTAS DE IA
+Las respuestas se generan automáticamente y no sustituyen asesoramiento profesional legal, médico o financiero.
+
+5. PROPIEDAD INTELECTUAL
+Los elementos propios de la marca THE WHORD'S & UNIVERSAL-ZON LLC, interfaz y contenidos musicales pertenecen a sus respectivos titulares.`;
+
+    const LEGAL_PRIVACY = `BORRADOR PARA REVISIÓN LEGAL
+POLÍTICA DE PRIVACIDAD
+UNIVERSAL-ZON AI
+Operador indicado: THE WHORD'S & UNIVERSAL-ZON LLC
+Correo: Kether@the-univerzal-zon.company
+WhatsApp Business: +1 408-627-9350
+Sitio: https://the-univerzal-zon.company
+Dirección: 1464 Chiplay Rd, San Jose, California.
+
+1. ALCANCE
+Describe el tratamiento de información en la aplicación e interfaz web.
+
+2. DATOS QUE SE TRATAN LOCALMENTE
+Las preferencias de usuario, nombre asignado y la confirmación de consentimiento se almacenan en el almacenamiento local del dispositivo.
+
+3. PRIVACIDAD EN CALIFORNIA
+Se respetan los principios aplicables a la privacidad y el control de datos personales.`;
+
+    // 22 CANCIONES Y VIDEOS OFICIALES
     const listaCanciones = [
       { titulo: "Tiraera pa Maldo El virao Del Barrio", id: "l5hTulztOlw" },
       { titulo: "Tiraera pa YOVNGCHIMI Código De Calle", id: "tDORNG7WYKQ" },
@@ -160,12 +284,98 @@
       { titulo: "H.D.M Sanguinarios", id: "_sWIU81myhk" }
     ];
 
+    // GESTIÓN DE FLUJO (ONBOARDING)
+    window.addEventListener('DOMContentLoaded', () => {
+      const consentimiento = localStorage.getItem('uz_consent_accepted');
+      const usuario = localStorage.getItem('uz_user_name');
+
+      if (consentimiento && usuario) {
+        ocultarTodoElFlujo();
+        iniciarApp(usuario);
+      } else {
+        document.getElementById('screen-welcome').classList.remove('hidden');
+      }
+    });
+
+    function ocultarTodoElFlujo() {
+      document.getElementById('screen-welcome').classList.add('hidden');
+      document.getElementById('screen-consent').classList.add('hidden');
+      document.getElementById('screen-profile').classList.add('hidden');
+    }
+
+    function irAConsentimiento() {
+      document.getElementById('screen-welcome').classList.add('hidden');
+      document.getElementById('screen-consent').classList.remove('hidden');
+      mostrarDocumento('terms');
+    }
+
+    function mostrarDocumento(tipo) {
+      const box = document.getElementById('legal-text-box');
+      const btnT = document.getElementById('btn-tab-terms');
+      const btnP = document.getElementById('btn-tab-privacy');
+      if (tipo === 'terms') {
+        box.textContent = LEGAL_TERMS;
+        btnT.classList.add('active');
+        btnP.classList.remove('active');
+      } else {
+        box.textContent = LEGAL_PRIVACY;
+        btnP.classList.add('active');
+        btnT.classList.remove('active');
+      }
+    }
+
+    function verificarAceptacion() {
+      const check = document.getElementById('check-consent');
+      document.getElementById('btn-accept-consent').disabled = !check.checked;
+    }
+
+    function guardarConsentimiento() {
+      localStorage.setItem('uz_consent_accepted', 'true');
+      document.getElementById('screen-consent').classList.add('hidden');
+      document.getElementById('screen-profile').classList.remove('hidden');
+    }
+
+    function guardarPerfil() {
+      const nombreInput = document.getElementById('input-username').value.trim();
+      const nombre = nombreInput || "Usuario";
+      localStorage.setItem('uz_user_name', nombre);
+      ocultarTodoElFlujo();
+      iniciarApp(nombre);
+    }
+
+    function iniciarApp(nombre) {
+      document.getElementById('drawer-welcome-user').textContent = `Hola, ${nombre}`;
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML = '';
+
+      const mensajeInicial = `¡Hola, ${nombre}! Bienvenido a Universal-Zon AI. Soy Alias (Coco). Todas las normas han sido aceptadas. Puedes escribirme, pulsar el micrófono para hablar o pedirme tus canciones oficiales.`;
+      
+      const aiBubble = document.createElement('div');
+      aiBubble.className = 'msg msg-assistant';
+      aiBubble.textContent = mensajeInicial;
+      chatBox.appendChild(aiBubble);
+
+      hablarCoco(mensajeInicial);
+    }
+
+    function abrirEditarPerfil() {
+      toggleMenu();
+      document.getElementById('screen-profile').classList.remove('hidden');
+    }
+
+    function abrirConsultarLegal() {
+      toggleMenu();
+      document.getElementById('screen-consent').classList.remove('hidden');
+      document.getElementById('check-consent').checked = true;
+      verificarAceptacion();
+    }
+
+    // MENÚ LATERAL Y VIDEOS
     function toggleMenu() {
       document.getElementById('drawer').classList.toggle('open');
       document.getElementById('overlay').classList.toggle('active');
     }
 
-    // Cargar la lista en pantalla
     function cargarListaCanciones() {
       const lv = document.getElementById('lvCanciones');
       lv.innerHTML = '';
@@ -197,7 +407,7 @@
       document.getElementById('video-frame').src = `https://www.youtube.com/embed/${cancion.id}?autoplay=1`;
     }
 
-    // TTS Coco (Español)
+    // VOZ DE COCO (TTS)
     function hablarCoco(texto) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
@@ -207,7 +417,7 @@
       window.speechSynthesis.speak(u);
     }
 
-    // Dictado por voz
+    // DICTADO POR VOZ
     let recognition;
     const btnMic = document.getElementById('btn-mic');
     const input = document.getElementById('user-input');
@@ -227,11 +437,11 @@
     }
 
     function iniciarDictadoPorVoz() {
-      if (!recognition) return alert("Reconocimiento de voz no soportado.");
+      if (!recognition) return alert("Dictado por voz no disponible en este navegador.");
       try { recognition.start(); } catch(e) { recognition.stop(); }
     }
 
-    // Chat interactivo con detección de canciones
+    // GESTIÓN DE CHAT
     function enviarMensaje(e) {
       e.preventDefault();
       const box = document.getElementById('chat-box');
@@ -245,20 +455,19 @@
       input.value = '';
       box.scrollTop = box.scrollHeight;
 
-      // Detectar si el usuario pide reproducir una canción por voz o texto
       const coincidencia = listaCanciones.find(c => txt.toLowerCase().includes(c.titulo.toLowerCase().split(' ')[0]));
 
       setTimeout(() => {
         let respuesta = "Te he escuchado.";
         if (txt.toLowerCase().includes("video") || txt.toLowerCase().includes("cancion") || txt.toLowerCase().includes("musica")) {
-          respuesta = "Abriendo tu lista de canciones y videos oficiales.";
+          respuesta = "Abriendo el reproductor con tus temas oficiales.";
           abrirVideos();
         } else if (coincidencia) {
           respuesta = `Reproduciendo ahora: ${coincidencia.titulo}.`;
           abrirVideos();
           reproducirTema(coincidencia);
         } else {
-          respuesta = "Entendido. La interfaz completa con tus 22 canciones, reproductor y voz de Coco está activa.";
+          respuesta = `Entendido. Todo el sistema está configurado y funcionando.`;
         }
 
         const aiBubble = document.createElement('div');
