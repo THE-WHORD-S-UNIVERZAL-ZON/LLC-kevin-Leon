@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Universal-Zon AI - THE WHORD'S & UNIVERSAL-ZON LLC</title>
+  <link rel="stylesheet" href="css/neon-theme.css">
+</head>
+<body>
+
+  <div id="screen-welcome" class="flow-screen">
+    <div class="uz-card-logo"><span class="uz-logo-text">UZ</span></div>
+    <h1 class="welcome-title">UNIVERSAL-ZON AI</h1>
+    <p class="welcome-company">THE WHORD'S &amp; UNIVERSAL-ZON LLC</p>
+    <p class="welcome-owner">Owner: Kevin León Atiles</p>
+    <div class="welcome-divider"></div>
+    <h2 class="welcome-headline">Bienvenido a Universal-Zon AI</h2>
+    <p class="welcome-desc">Tu asistente de inteligencia artificial personal con interacción por voz, música oficial y procesamiento seguro.</p>
+    <button class="btn-flow" onclick="irAConsentimiento()">Continuar</button>
+    <p class="brand-tagline">Innovación e Inteligencia Universal</p>
+  </div>
+
+  <div id="screen-consent" class="flow-screen hidden">
+    <div class="legal-container">
+      <div class="legal-header">
+        <h2>Normas y Políticas de Uso</h2>
+        <p>Documentación oficial de THE WHORD'S &amp; UNIVERSAL-ZON LLC</p>
+        <p class="owner-badge">Owner / Propietario: Kevin León Atiles</p>
+      </div>
+      <div class="tab-bar">
+        <button id="btn-tab-terms" class="tab-btn active" onclick="mostrarDocumento('terms')">Términos y Condiciones</button>
+        <button id="btn-tab-privacy" class="tab-btn" onclick="mostrarDocumento('privacy')">Política de Privacidad</button>
+      </div>
+      <div id="legal-text-box" class="legal-box"></div>
+      <label class="consent-check-label">
+        <input type="checkbox" id="check-consent" onchange="verificarAceptacion()">
+        <span>Confirmo que he leído y acepto los Términos y la Política de Privacidad de THE WHORD'S &amp; UNIVERSAL-ZON LLC.</span>
+      </label>
+      <button id="btn-accept-consent" class="btn-flow" disabled onclick="guardarConsentimiento()">Aceptar y Continuar</button>
+    </div>
+  </div>
+
+  <div id="screen-profile" class="flow-screen hidden">
+    <div class="profile-card">
+      <div class="uz-card-logo" style="margin: 0 auto 16px;"><span class="uz-logo-text">👤</span></div>
+      <h2>Perfil de Usuario</h2>
+      <p>¿Cómo deseas que te llame Alias (Coco)?</p>
+      <input type="text" id="input-username" class="input-profile" placeholder="Escribe tu nombre o apodo..." autocomplete="off">
+      <button class="btn-flow" onclick="guardarPerfil()">Comenzar experiencia</button>
+    </div>
+  </div>
+
+  <div id="overlay" onclick="toggleMenu()"></div>
+  <nav id="drawer">
+    <div class="drawer-header" id="drawer-welcome-user">
+      Universal-Zon AI
+      <small>Owner: Kevin León Atiles</small>
+    </div>
+    <ul class="drawer-menu">
+      <li><a onclick="toggleMenu()">💬 Chat con Coco</a></li>
+      <li><a onclick="abrirVideos()">🎬 Canciones y Videos Oficiales</a></li>
+      <li><a onclick="abrirEditarPerfil()">👤 Cambiar Nombre</a></li>
+      <li><a onclick="abrirConsultarLegal()">📜 Ver Términos y Normas</a></li>
+    </ul>
+  </nav>
+
+  <div id="video-modal">
+    <div class="video-header">
+      <h2>🎵 Música y Videos Oficiales</h2>
+      <button class="modal-close" onclick="cerrarVideos()">✕</button>
+    </div>
+    <div class="player-container">
+      <iframe id="video-frame" src="" allowfullscreen></iframe>
+    </div>
+    <div class="player-controls-bar">
+      <button class="ctrl-btn" onclick="reproducirAnterior()" title="Anterior">⏮</button>
+      <button class="ctrl-btn" onclick="pausarReproductor()" title="Pausar">⏯</button>
+      <button class="ctrl-btn" onclick="reproducirSiguiente()" title="Siguiente">⏭</button>
+    </div>
+    <div class="track-info-futuristic">
+      <div class="track-title" id="tvCurrentTrack">Selecciona un tema:</div>
+      <div class="track-stats">
+        <span id="stat-views">👁 14.8K vistas</span>
+        <span id="stat-likes">👍 1.2K likes</span>
+        <span id="stat-comments">💬 340 comentarios</span>
+      </div>
+    </div>
+    <ul class="song-list-futuristic" id="lvCanciones"></ul>
+    <div class="youtube-interaction-box">
+      <div style="font-size: 0.72rem; color: #94a3b8; margin-bottom: 2px;">Interacción YouTube API:</div>
+      <div class="interaction-row">
+        <input type="text" id="input-yt-comment" class="interaction-input" placeholder="Comentario público..." autocomplete="off">
+        <button class="action-pill-btn" onclick="enviarComentarioYouTube()">Comentar</button>
+        <button class="action-pill-btn" onclick="darLikeYouTube()">Like</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-container">
+    <div class="neon-picker-bar">
+      <span style="font-size: 0.75rem; font-weight: bold; color: #94a3b8; margin-right: 4px;">NEÓN:</span>
+      <div class="neon-dot" style="background: #ff0055;" onclick="setNeonColor('#ff0055')" title="Rojo"></div>
+      <div class="neon-dot" style="background: #ffe600;" onclick="setNeonColor('#ffe600')" title="Amarillo"></div>
+      <div class="neon-dot" style="background: #00e5ff;" onclick="setNeonColor('#00e5ff')" title="Azul"></div>
+      <div class="neon-dot" style="background: #00ff66;" onclick="setNeonColor('#00ff66')" title="Verde"></div>
+      <div class="neon-dot" style="background: #9d00ff;" onclick="setNeonColor('#9d00ff')" title="Violeta"></div>
+      <div class="neon-dot" style="background: #ff66cc;" onclick="setNeonColor('#ff66cc')" title="Rosita"></div>
+      <div class="neon-dot" style="background: #a1a1aa;" onclick="setNeonColor('#a1a1aa')" title="Gris"></div>
+    </div>
+    <header>
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <div class="app-title">Alias (Coco) - Universal-Zon AI</div>
+    </header>
+    <div id="chat-box"></div>
+    <footer>
+      <form id="chat-form" onsubmit="enviarMensaje(event)">
+        <button type="button" id="btn-mic" class="action-btn" onclick="iniciarDictadoPorVoz()" title="Hablar">🎤</button>
+        <input type="text" id="user-input" placeholder="Escribe un mensaje o habla..." autocomplete="off" required>
+        <button type="submit" class="action-btn btn-submit">➤</button>
+      </form>
+    </footer>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

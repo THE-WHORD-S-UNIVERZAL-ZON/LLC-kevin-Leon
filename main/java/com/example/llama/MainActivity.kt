@@ -19,6 +19,8 @@ import android.content.Intent
 import android.speech.RecognizerIntent
 import android.widget.ImageButton
 import android.speech.tts.TextToSpeech
+import android.media.MediaPlayer
+import java.net.URLEncoder
 import java.util.Locale
 import com.arm.aichat.AiChat
 import com.arm.aichat.InferenceEngine
@@ -51,6 +53,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var engine: InferenceEngine
     private var generationJob: Job? = null
     private var tts: TextToSpeech? = null
+    private var mediaPlayer: MediaPlayer? = null
+    private var selectedVoice: String = "es-PR-VictorNeural"
 
     // Conversation states
     private var isModelReady = false
@@ -77,6 +81,10 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         configurarMenuLateral()
         // Inicializar voz en español de Coco (Text-to-Speech)
+        mediaPlayer = MediaPlayer()
+        val prefsVoz = getSharedPreferences("coco_prefs", MODE_PRIVATE)
+        selectedVoice = prefsVoz.getString("selected_voice", "es-PR-VictorNeural") ?: "es-PR-VictorNeural"
+
         tts = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
                 tts?.language = Locale("es", "ES")
@@ -151,6 +159,16 @@ class MainActivity : AppCompatActivity() {
                 .setMessage("Por ahora, los mensajes se conservan solo mientras esta sesión de la aplicación permanece activa. El historial permanente y la sincronización en la nube todavía no están implementados.")
                 .setPositiveButton("Entendido", null)
                 .show()
+        }
+
+        findViewById<MaterialButton?>(R.id.nav_voice_selector)?.setOnClickListener {
+            drawerLayout.closeDrawer(Gravity.START)
+            mostrarSelectorVoz()
+        }
+
+        findViewById<android.widget.ImageButton?>(R.id.btn_mic)?.setOnLongClickListener {
+            mostrarSelectorVoz()
+            true
         }
 
         findViewById<MaterialButton>(R.id.nav_online_mode).setOnClickListener {
@@ -284,7 +302,7 @@ class MainActivity : AppCompatActivity() {
                                 userInputEt.isEnabled = true
                                 userActionFab.isEnabled = true
                                 if (lastAssistantMsg.isNotBlank()) {
-                                    tts?.speak(lastAssistantMsg.toString(), TextToSpeech.QUEUE_FLUSH, null, "coco_voice")
+                                    reproducirAudioNeuronal(lastAssistantMsg.toString())
                                 }
                             }
                         }.collect { token ->
@@ -345,6 +363,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         tts?.stop()
         tts?.shutdown()
+        mediaPlayer?.release()
+        mediaPlayer = null
         engine.destroy()
         super.onDestroy()
     }
@@ -409,5 +429,59 @@ fun GgufMetadata.filename() = when {
     }
     else -> {
         "model-${System.currentTimeMillis().toHexString()}"
+    }
+
+    private fun mostrarSelectorVoz() {
+        val opciones = arrayOf("Víctor (Masculino - Puerto Rico)", "Karina (Femenino - Puerto Rico)")
+        val codigos = arrayOf("es-PR-VictorNeural", "es-PR-KarinaNeural")
+        val prefs = getSharedPreferences("coco_prefs", MODE_PRIVATE)
+        val actual = codigos.indexOf(prefs.getString("selected_voice", "es-PR-VictorNeural"))
+        val seleccionado = if (actual >= 0) actual else 0
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Voz de Alias Coco")
+            .setSingleChoiceItems(opciones, seleccionado) { dialog, which ->
+                val nuevaVoz = codigos[which]
+                prefs.edit().putString("selected_voice", nuevaVoz).apply()
+                selectedVoice = nuevaVoz
+                Toast.makeText(this, "Voz seleccionada: " + opciones[which], Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun reproducirAudioNeuronal(texto: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val prefs = getSharedPreferences("coco_prefs", MODE_PRIVATE)
+                val voz = prefs.getString("selected_voice", "es-PR-VictorNeural") ?: "es-PR-VictorNeural"
+                val encoded = java.net.URLEncoder.encode(texto, "UTF-8")
+                val url = "http://127.0.0.1:8000/api/tts?texto=$encoded&voz=$voz"
+
+                withContext(Dispatchers.Main) {
+                    try {
+                        mediaPlayer?.reset()
+                        mediaPlayer?.setDataSource(url)
+                        mediaPlayer?.setOnErrorListener { _, _, _ ->
+                            tts?.speak(texto, TextToSpeech.QUEUE_FLUSH, null, "coco_voice")
+                            true
+                        }
+                        mediaPlayer?.setOnPreparedListener { mp ->
+                            mp.start()
+                        }
+                        mediaPlayer?.prepareAsync()
+                    } catch (e: Exception) {
+                        Log.e("AliasCoco", "Fallo MediaPlayer, usando TTS respaldo", e)
+                        tts?.speak(texto, TextToSpeech.QUEUE_FLUSH, null, "coco_voice")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("AliasCoco", "Fallo red/servidor, usando TTS respaldo", e)
+                withContext(Dispatchers.Main) {
+                    tts?.speak(texto, TextToSpeech.QUEUE_FLUSH, null, "coco_voice")
+                }
+            }
+        }
     }
 }

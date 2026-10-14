@@ -120,6 +120,18 @@
             android:textColor="@color/uz_white"
             app:cornerRadius="12dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nav_voice_selector"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="start|center_vertical"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:text="Voz de Alias Coco"
+            android:textColor="@color/uz_white"
+            app:cornerRadius="12dp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

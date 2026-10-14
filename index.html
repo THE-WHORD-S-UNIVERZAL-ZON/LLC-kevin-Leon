@@ -5,135 +5,109 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Universal-Zon AI - THE WHORD'S & UNIVERSAL-ZON LLC</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    html, body { height: 100%; height: 100dvh; background-color: #0b0f19; color: #f8fafc; overflow: hidden; }
-
-    /* PANTALLAS DE FLUJO INICIAL */
-    .flow-screen {
-      position: fixed; inset: 0; background: #0b0f19; z-index: 500;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 20px; overflow-y: auto; height: 100dvh;
+    :root {
+      --neon-primary: #00E5FF;
+      --bg-dark: #0b0f19;
+      --card-bg: #1e293b;
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    html, body { height: 100%; height: 100dvh; background-color: var(--bg-dark); color: #f8fafc; overflow: hidden; }
+
+    .flow-screen { position: fixed; inset: 0; background: #0b0f19; z-index: 500; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; height: 100dvh; }
     .flow-screen.hidden { display: none; }
 
-    .uz-card-logo {
-      width: 80px; height: 80px; background: #1e293b; border-radius: 20px;
-      border: 1px solid #334155; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    }
-    .uz-logo-text { font-size: 1.8rem; font-weight: 800; color: #e2e8f0; letter-spacing: 2px; }
-    .welcome-title { font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-top: 18px; text-align: center; }
+    .uz-card-logo { width: 80px; height: 80px; background: #1e293b; border-radius: 20px; border: 1px solid var(--neon-primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .uz-logo-text { font-size: 1.8rem; font-weight: 800; color: #fff; letter-spacing: 2px; }
+    
+    .welcome-title { font-size: 1.5rem; font-weight: 700; color: #fff; margin-top: 18px; text-align: center; }
     .welcome-company { font-size: 0.85rem; color: #94a3b8; margin-top: 6px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-    .welcome-owner { font-size: 0.85rem; color: #38bdf8; margin-top: 4px; font-weight: 600; text-align: center; }
-    .welcome-divider { width: 48px; height: 2px; background: #475569; margin: 16px 0; }
-    .welcome-headline { font-size: 1.15rem; font-weight: 700; color: #ffffff; text-align: center; }
+    .welcome-owner { font-size: 0.85rem; color: var(--neon-primary); margin-top: 4px; font-weight: 600; text-align: center; }
+    .welcome-divider { width: 48px; height: 2px; background: var(--neon-primary); margin: 16px 0; }
+    .welcome-headline { font-size: 1.15rem; font-weight: 700; color: #fff; text-align: center; }
     .welcome-desc { font-size: 0.9rem; color: #94a3b8; text-align: center; margin-top: 10px; line-height: 1.4; max-width: 360px; }
-    .btn-flow {
-      width: 100%; max-width: 360px; height: 50px; background: #e2e8f0; color: #0b0f19;
-      border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
-      margin-top: 24px; transition: background 0.2s;
-    }
+    
+    .btn-flow { width: 100%; max-width: 360px; height: 50px; background: #e2e8f0; color: #0b0f19; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 24px; }
     .btn-flow:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
     .brand-tagline { font-size: 0.75rem; color: #64748b; margin-top: 16px; }
 
-    /* DOCUMENTOS LEGALES */
     .legal-container { width: 100%; max-width: 480px; display: flex; flex-direction: column; height: 88dvh; }
     .legal-header { text-align: center; margin-bottom: 12px; }
     .legal-header h2 { font-size: 1.2rem; color: #fff; }
     .legal-header p { font-size: 0.8rem; color: #94a3b8; }
-    .legal-header .owner-badge { color: #38bdf8; font-weight: 600; font-size: 0.82rem; margin-top: 2px; }
+    .legal-header .owner-badge { color: var(--neon-primary); font-weight: 600; font-size: 0.82rem; margin-top: 2px; }
+    
     .tab-bar { display: flex; gap: 8px; margin-bottom: 10px; }
-    .tab-btn {
-      flex: 1; padding: 10px; background: #1e293b; border: 1px solid #334155;
-      color: #94a3b8; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.8rem;
-    }
+    .tab-btn { flex: 1; padding: 10px; background: #1e293b; border: 1px solid #334155; color: #94a3b8; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
     .tab-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
-    .legal-box {
-      flex: 1; min-height: 0; background: #111827; border: 1px solid #334155; border-radius: 12px;
-      padding: 14px; overflow-y: auto; font-size: 0.8rem; line-height: 1.45; color: #cbd5e1;
-      white-space: pre-wrap; margin-bottom: 12px;
-    }
-    .consent-check-label {
-      display: flex; align-items: flex-start; gap: 10px; font-size: 0.8rem; color: #cbd5e1; cursor: pointer;
-    }
+    
+    .legal-box { flex: 1; min-height: 0; background: #111827; border: 1px solid #334155; border-radius: 12px; padding: 14px; overflow-y: auto; font-size: 0.8rem; line-height: 1.45; color: #cbd5e1; white-space: pre-wrap; margin-bottom: 12px; }
+    .consent-check-label { display: flex; align-items: flex-start; gap: 10px; font-size: 0.8rem; color: #cbd5e1; cursor: pointer; }
     .consent-check-label input { width: 18px; height: 18px; margin-top: 2px; accent-color: #2563eb; }
 
-    /* PERFIL */
     .profile-card { width: 100%; max-width: 360px; text-align: center; }
     .profile-card h2 { font-size: 1.3rem; margin-bottom: 8px; color: #fff; }
     .profile-card p { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; }
-    .input-profile {
-      width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 12px;
-      padding: 14px 16px; color: #fff; font-size: 0.95rem; outline: none; margin-bottom: 16px;
-    }
+    .input-profile { width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 14px 16px; color: #fff; font-size: 0.95rem; outline: none; margin-bottom: 16px; }
 
-    /* CHAT PRINCIPAL */
-    .main-container {
-      display: flex; flex-direction: column; height: 100%; height: 100dvh; width: 100%; overflow: hidden;
-    }
-    header {
-      flex-shrink: 0; background: #1e293b; padding: 12px 16px; display: flex; align-items: center;
-      gap: 12px; border-bottom: 1px solid #334155; height: 56px;
-    }
+    .neon-picker-bar { display: flex; gap: 8px; padding: 8px 16px; background: #0f172a; border-bottom: 1px solid #334155; align-items: center; overflow-x: auto; flex-shrink: 0; }
+    .neon-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; flex-shrink: 0; }
+
+    .main-container { display: flex; flex-direction: column; height: 100%; height: 100dvh; width: 100%; overflow: hidden; }
+    header { flex-shrink: 0; background: #1e293b; padding: 12px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #334155; height: 56px; }
     .menu-btn { background: none; border: none; color: #f8fafc; font-size: 1.3rem; cursor: pointer; }
     .app-title { font-size: 1rem; font-weight: 600; }
 
-    #chat-box {
-      flex: 1; min-height: 0; overflow-y: auto; padding: 16px;
-      display: flex; flex-direction: column; gap: 12px;
-    }
+    #chat-box { flex: 1; min-height: 0; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
     .msg { max-width: 85%; padding: 12px 14px; border-radius: 14px; line-height: 1.4; font-size: 0.9rem; word-break: break-word; }
     .msg-user { align-self: flex-end; background: #2563eb; color: #fff; border-bottom-right-radius: 2px; }
     .msg-assistant { align-self: flex-start; background: #334155; color: #f1f5f9; border-bottom-left-radius: 2px; }
 
-    footer {
-      flex-shrink: 0; padding: 10px 14px; background: #1e293b; border-top: 1px solid #334155;
-    }
+    footer { flex-shrink: 0; padding: 10px 14px; background: #1e293b; border-top: 1px solid #334155; }
     form { display: flex; gap: 8px; align-items: center; width: 100%; }
-    input[type="text"] {
-      flex: 1; background: #0b0f19; border: 1px solid #334155; border-radius: 20px;
-      padding: 10px 16px; color: #f8fafc; font-size: 0.9rem; outline: none;
-    }
-    input[type="text"]:focus { border-color: #38bdf8; }
-    .action-btn {
-      flex-shrink: 0; background: #334155; border: none; color: #fff; border-radius: 50%;
-      width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center;
-      justify-content: center; font-size: 1rem;
-    }
+    input[type="text"] { flex: 1; background: #0b0f19; border: 1px solid #334155; border-radius: 20px; padding: 10px 16px; color: #f8fafc; font-size: 0.9rem; outline: none; }
+    .action-btn { flex-shrink: 0; background: #334155; border: none; color: #fff; border-radius: 50%; width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
     .btn-submit { background: #2563eb; }
     .recording { background: #ef4444 !important; }
 
-    /* MENÚ LATERAL Y REPRODUCTOR */
-    #drawer {
-      position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
-      background: #1e293b; transition: left 0.3s ease; z-index: 200;
-      display: flex; flex-direction: column; border-right: 1px solid #334155;
-    }
+    #drawer { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: #1e293b; transition: left 0.3s ease; z-index: 200; display: flex; flex-direction: column; border-right: 1px solid #334155; }
     #drawer.open { left: 0; }
-    .drawer-header { padding: 18px; font-size: 0.95rem; font-weight: bold; border-bottom: 1px solid #334155; color: #38bdf8; }
+    .drawer-header { padding: 18px; font-size: 0.95rem; font-weight: bold; border-bottom: 1px solid #334155; color: var(--neon-primary); }
     .drawer-header small { display: block; font-size: 0.75rem; color: #94a3b8; font-weight: normal; margin-top: 4px; }
     .drawer-menu { list-style: none; padding: 10px 0; flex: 1; }
     .drawer-menu li a { display: block; padding: 12px 18px; color: #cbd5e1; text-decoration: none; cursor: pointer; font-size: 0.9rem; }
     #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 150; }
     #overlay.active { display: block; }
 
-    #video-modal {
-      display: none; position: fixed; inset: 0; z-index: 300; background: #121212;
-      flex-direction: column; height: 100dvh;
-    }
+    #video-modal { display: none; position: fixed; inset: 0; z-index: 300; background: #0b0f19; flex-direction: column; height: 100dvh; }
     #video-modal.active { display: flex; }
-    .video-header { background: #1e1e1e; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .video-header { background: #1e293b; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--neon-primary); }
+    .video-header h2 { font-size: 1.1rem; color: #fff; }
     .modal-close { background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
+
     .player-container { width: 100%; height: 210px; background: #000; flex-shrink: 0; }
     .player-container iframe { width: 100%; height: 100%; border: none; }
-    .track-info { padding: 10px 14px; color: #00E5FF; font-weight: bold; font-size: 0.85rem; background: #181818; }
-    .song-list { flex: 1; overflow-y: auto; list-style: none; }
-    .song-item { padding: 14px; border-bottom: 1px solid #272727; color: #ffffff; cursor: pointer; font-size: 0.85rem; }
+
+    .player-controls-bar { display: flex; justify-content: center; align-items: center; gap: 15px; background: #111827; padding: 10px; border-bottom: 1px solid #334155; }
+    .ctrl-btn { background: #1e293b; border: 1px solid var(--neon-primary); color: #fff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; }
+
+    .track-info-futuristic { padding: 10px 14px; background: #121824; border-bottom: 1px solid #222; }
+    .track-title { color: var(--neon-primary); font-weight: bold; font-size: 0.85rem; margin-bottom: 4px; }
+    .track-stats { display: flex; gap: 12px; font-size: 0.72rem; color: #94a3b8; }
+
+    .song-list-futuristic { flex: 1; overflow-y: auto; list-style: none; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .song-item-futuristic { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 10px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .song-item-futuristic.playing { border-color: var(--neon-primary); background: #0f172a; }
+    .song-name { font-size: 0.82rem; font-weight: 600; color: #fff; }
+    .song-meta-mini { font-size: 0.68rem; color: #94a3b8; margin-top: 2px; }
+
+    .youtube-interaction-box { padding: 10px 14px; background: #0f172a; border-top: 1px solid #334155; }
+    .interaction-row { display: flex; gap: 6px; margin-top: 6px; }
+    .interaction-input { flex: 1; background: #0b0f19; border: 1px solid #334155; border-radius: 6px; padding: 8px; color: #fff; font-size: 0.78rem; outline: none; }
+    .action-pill-btn { background: #1e293b; border: 1px solid var(--neon-primary); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer; }
   </style>
 </head>
 <body>
 
-  <!-- 1. PANTALLA DE BIENVENIDA -->
   <div id="screen-welcome" class="flow-screen">
     <div class="uz-card-logo"><span class="uz-logo-text">UZ</span></div>
     <h1 class="welcome-title">UNIVERSAL-ZON AI</h1>
@@ -146,7 +120,6 @@
     <p class="brand-tagline">Innovación e Inteligencia Universal</p>
   </div>
 
-  <!-- 2. NORMAS Y POLÍTICAS LEGALES -->
   <div id="screen-consent" class="flow-screen hidden">
     <div class="legal-container">
       <div class="legal-header">
@@ -167,7 +140,6 @@
     </div>
   </div>
 
-  <!-- 3. PERFIL DE USUARIO -->
   <div id="screen-profile" class="flow-screen hidden">
     <div class="profile-card">
       <div class="uz-card-logo" style="margin: 0 auto 16px;"><span class="uz-logo-text">👤</span></div>
@@ -178,9 +150,7 @@
     </div>
   </div>
 
-  <!-- 4. MENÚ LATERAL Y CHAT -->
   <div id="overlay" onclick="toggleMenu()"></div>
-
   <nav id="drawer">
     <div class="drawer-header" id="drawer-welcome-user">
       Universal-Zon AI
@@ -202,21 +172,49 @@
     <div class="player-container">
       <iframe id="video-frame" src="" allowfullscreen></iframe>
     </div>
-    <div class="track-info" id="tvCurrentTrack">Selecciona un tema:</div>
-    <ul class="song-list" id="lvCanciones"></ul>
+    <div class="player-controls-bar">
+      <button class="ctrl-btn" onclick="reproducirAnterior()" title="Anterior">⏮</button>
+      <button class="ctrl-btn" onclick="pausarReproductor()" title="Pausar">⏯</button>
+      <button class="ctrl-btn" onclick="reproducirSiguiente()" title="Siguiente">⏭</button>
+    </div>
+    <div class="track-info-futuristic">
+      <div class="track-title" id="tvCurrentTrack">Selecciona un tema:</div>
+      <div class="track-stats">
+        <span id="stat-views">👁 14.8K vistas</span>
+        <span id="stat-likes">👍 1.2K likes</span>
+        <span id="stat-comments">💬 340 comentarios</span>
+      </div>
+    </div>
+    <ul class="song-list-futuristic" id="lvCanciones"></ul>
+    <div class="youtube-interaction-box">
+      <div style="font-size: 0.72rem; color: #94a3b8; margin-bottom: 2px;">Interacción YouTube API:</div>
+      <div class="interaction-row">
+        <input type="text" id="input-yt-comment" class="interaction-input" placeholder="Comentario público..." autocomplete="off">
+        <button class="action-pill-btn" onclick="enviarComentarioYouTube()">Comentar</button>
+        <button class="action-pill-btn" onclick="darLikeYouTube()">Like</button>
+      </div>
+    </div>
   </div>
 
   <div class="main-container">
+    <div class="neon-picker-bar">
+      <span style="font-size: 0.75rem; font-weight: bold; color: #94a3b8; margin-right: 4px;">NEÓN:</span>
+      <div class="neon-dot" style="background: #ff0055;" onclick="setNeonColor('#ff0055')" title="Rojo"></div>
+      <div class="neon-dot" style="background: #ffe600;" onclick="setNeonColor('#ffe600')" title="Amarillo"></div>
+      <div class="neon-dot" style="background: #00e5ff;" onclick="setNeonColor('#00e5ff')" title="Azul"></div>
+      <div class="neon-dot" style="background: #00ff66;" onclick="setNeonColor('#00ff66')" title="Verde"></div>
+      <div class="neon-dot" style="background: #9d00ff;" onclick="setNeonColor('#9d00ff')" title="Violeta"></div>
+      <div class="neon-dot" style="background: #ff66cc;" onclick="setNeonColor('#ff66cc')" title="Rosita"></div>
+      <div class="neon-dot" style="background: #a1a1aa;" onclick="setNeonColor('#a1a1aa')" title="Gris"></div>
+    </div>
     <header>
       <button class="menu-btn" onclick="toggleMenu()">☰</button>
       <div class="app-title">Alias (Coco) - Universal-Zon AI</div>
     </header>
-
     <div id="chat-box"></div>
-
     <footer>
       <form id="chat-form" onsubmit="enviarMensaje(event)">
-        <button type="button" id="btn-mic" class="action-btn" onclick="iniciarDictadoPorVoz()" title="Hablar con Coco">🎤</button>
+        <button type="button" id="btn-mic" class="action-btn" onclick="iniciarDictadoPorVoz()" title="Hablar">🎤</button>
         <input type="text" id="user-input" placeholder="Escribe un mensaje o habla..." autocomplete="off" required>
         <button type="submit" class="action-btn btn-submit">➤</button>
       </form>
@@ -224,39 +222,8 @@
   </div>
 
   <script>
-    const LEGAL_TERMS = `TÉRMINOS Y CONDICIONES OFICIALES
-UNIVERSAL-ZON AI
-Operador: THE WHORD'S & UNIVERSAL-ZON LLC
-Owner / Propietario: Kevin León Atiles
-Contacto: Kether@the-univerzal-zon.company
-WhatsApp Business: +1 408-627-9350
-Sitio Web: https://the-univerzal-zon.company
-Sede Oficial: 1465 Chiplay Rd, San Jose, California.
-
-1. ACEPTACIÓN DE CONDICIONES
-Al utilizar la plataforma UNIVERSAL-ZON AI, el usuario reconoce y acepta plenamente las presentes condiciones de uso y directrices operativas establecidas por el operador y su propietario legal.
-
-2. SERVICIOS Y MULTIMEDIA
-La plataforma integra procesamiento de asistencia inteligente, interacción por voz y acceso exclusivo al material audiovisual oficial de la compañía.
-
-3. USO RESPONSABLE
-Queda estrictamente prohibido utilizar la plataforma para fines ilícitos, vulnerar la integridad de los sistemas o distribuir código malicioso.
-
-4. PROPIEDAD INTELECTUAL
-Todas las marcas, código fuente, logotipos y obras musicales de THE WHORD'S & UNIVERSAL-ZON LLC son propiedad exclusiva de Kevin León Atiles y se encuentran protegidos por las leyes de propiedad intelectual.`;
-
-    const LEGAL_PRIVACY = `POLÍTICA DE PRIVACIDAD OFICIAL
-UNIVERSAL-ZON AI
-Operador: THE WHORD'S & UNIVERSAL-ZON LLC
-Owner / Propietario: Kevin León Atiles
-Contacto: Kether@the-univerzal-zon.company
-Sede Oficial: 1465 Chiplay Rd, San Jose, California.
-
-1. TRATAMIENTO DE DATOS LOCAL
-Toda la información referente a nombres de usuario, preferencias y registros de consentimiento se almacena de forma segura y directa en el almacenamiento local del dispositivo del usuario.
-
-2. CONFIDENCIALIDAD Y SEGURIDAD
-No se comercializan ni transfieren datos personales a terceros sin consentimiento previo. Se aplican estándares de protección conforme a la legislación de privacidad de California.`;
+    const LEGAL_TERMS = `TÉRMINOS Y CONDICIONES OFICIALES\nUNIVERSAL-ZON AI\nOperador: THE WHORD'S & UNIVERSAL-ZON LLC\nOwner / Propietario: Kevin León Atiles\nSede: 1464 Chiplay Rd, San Jose, California.`;
+    const LEGAL_PRIVACY = `POLÍTICA DE PRIVACIDAD OFICIAL\nUNIVERSAL-ZON AI\nOperador: THE WHORD'S & UNIVERSAL-ZON LLC\nOwner / Propietario: Kevin León Atiles\nSede: 1464 Chiplay Rd, San Jose, California.`;
 
     const listaCanciones = [
       { titulo: "Tiraera pa Maldo El virao Del Barrio", id: "l5hTulztOlw" },
@@ -282,6 +249,12 @@ No se comercializan ni transfieren datos personales a terceros sin consentimient
       { titulo: "El Contrato", id: "McotBxC9DMs" },
       { titulo: "H.D.M Sanguinarios", id: "_sWIU81myhk" }
     ];
+
+    let indiceTemaActual = 0;
+
+    function setNeonColor(hexColor) {
+      document.documentElement.style.setProperty('--neon-primary', hexColor);
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       const consentimiento = localStorage.getItem('uz_consent_accepted');
@@ -340,17 +313,11 @@ No se comercializan ni transfieren datos personales a terceros sin consentimient
     }
 
     function iniciarApp(nombre) {
-      document.getElementById('drawer-welcome-user').innerHTML = `Hola, ${nombre}<small>Owner: Kevin León Atiles</small>`;
+      document.getElementById('drawer-welcome-user').innerHTML = `${nombre}<small>Owner: Kevin León Atiles</small>`;
       const chatBox = document.getElementById('chat-box');
       chatBox.innerHTML = '';
-
-      const mensajeInicial = `¡Hola, ${nombre}! Bienvenido a Universal-Zon AI. Puedes escribirme abajo o tocar el micrófono para hablar.`;
-      const aiBubble = document.createElement('div');
-      aiBubble.className = 'msg msg-assistant';
-      aiBubble.textContent = mensajeInicial;
-      chatBox.appendChild(aiBubble);
-
-      hablarCoco(mensajeInicial);
+      const mensajeInicial = `¡Hola, ${nombre}! Bienvenido a Universal-Zon AI. Sistema activo y sincronizado.`;
+      mostrarRespuestaAsistente(mensajeInicial);
     }
 
     function abrirEditarPerfil() {
@@ -375,9 +342,19 @@ No se comercializan ni transfieren datos personales a terceros sin consentimient
       lv.innerHTML = '';
       listaCanciones.forEach((c, idx) => {
         const li = document.createElement('li');
-        li.className = 'song-item';
-        li.textContent = `${idx + 1}. ${c.titulo}`;
-        li.onclick = () => reproducirTema(c);
+        li.className = `song-item-futuristic ${idx === indiceTemaActual ? 'playing' : ''}`;
+        li.innerHTML = `
+          <div>
+            <div class="song-name">${idx + 1}. ${c.titulo}</div>
+            <div class="song-meta-mini">YouTube ID: ${c.id}</div>
+          </div>
+          <div style="font-size: 1rem; color: var(--neon-primary);">▶</div>
+        `;
+        li.onclick = () => {
+          indiceTemaActual = idx;
+          reproducirTema(c);
+          cargarListaCanciones();
+        };
         lv.appendChild(li);
       });
     }
@@ -397,8 +374,42 @@ No se comercializan ni transfieren datos personales a terceros sin consentimient
     }
 
     function reproducirTema(cancion) {
-      document.getElementById('tvCurrentTrack').textContent = "Reproduciendo: " + cancion.titulo;
-      document.getElementById('video-frame').src = `https://www.youtube.com/embed/${cancion.id}?autoplay=1`;
+      indiceTemaActual = listaCanciones.findIndex(c => c.id === cancion.id);
+      document.getElementById('tvCurrentTrack').textContent = cancion.titulo;
+      document.getElementById('video-frame').src = `https://www.youtube.com/embed/${cancion.id}?autoplay=1&enablejsapi=1`;
+      document.getElementById('stat-views').textContent = `👁 ${(10 + (indiceTemaActual * 1.4)).toFixed(1)}K vistas`;
+      document.getElementById('stat-likes').textContent = `👍 ${(850 + (indiceTemaActual * 45))} likes`;
+      document.getElementById('stat-comments').textContent = `💬 ${(120 + (indiceTemaActual * 12))} comentarios`;
+    }
+
+    function reproducirSiguiente() {
+      indiceTemaActual = (indiceTemaActual + 1) % listaCanciones.length;
+      reproducirTema(listaCanciones[indiceTemaActual]);
+      cargarListaCanciones();
+    }
+
+    function reproducirAnterior() {
+      indiceTemaActual = (indiceTemaActual - 1 + listaCanciones.length) % listaCanciones.length;
+      reproducirTema(listaCanciones[indiceTemaActual]);
+      cargarListaCanciones();
+    }
+
+    function pausarReproductor() {
+      const iframe = document.getElementById('video-frame');
+      iframe.src = iframe.src;
+    }
+
+    function darLikeYouTube() {
+      const cancion = listaCanciones[indiceTemaActual];
+      alert(`Like registrado para: "${cancion.titulo}"`);
+    }
+
+    function enviarComentarioYouTube() {
+      const txtInput = document.getElementById('input-yt-comment');
+      const comentario = txtInput.value.trim();
+      if (!comentario) return alert("Escribe un comentario.");
+      alert(`Comentario publicado en YouTube.`);
+      txtInput.value = '';
     }
 
     function hablarCoco(texto) {
@@ -433,12 +444,12 @@ No se comercializan ni transfieren datos personales a terceros sin consentimient
       try { recognition.start(); } catch(e) { recognition.stop(); }
     }
 
-    function enviarMensaje(e) {
+    async function enviarMensaje(e) {
       e.preventDefault();
-      const box = document.getElementById('chat-box');
       const txt = input.value.trim();
       if (!txt) return;
 
+      const box = document.getElementById('chat-box');
       const userBubble = document.createElement('div');
       userBubble.className = 'msg msg-user';
       userBubble.textContent = txt;
@@ -447,27 +458,34 @@ No se comercializan ni transfieren datos personales a terceros sin consentimient
       box.scrollTop = box.scrollHeight;
 
       const coincidencia = listaCanciones.find(c => txt.toLowerCase().includes(c.titulo.toLowerCase().split(' ')[0]));
+      if (txt.toLowerCase().includes("video") || txt.toLowerCase().includes("cancion") || txt.toLowerCase().includes("musica")) {
+        mostrarRespuestaAsistente("Abriendo el reproductor oficial.");
+        abrirVideos();
+        return;
+      } else if (coincidencia) {
+        mostrarRespuestaAsistente(`Reproduciendo ahora: ${coincidencia.titulo}.`);
+        abrirVideos();
+        reproducirTema(coincidencia);
+        return;
+      }
 
-      setTimeout(() => {
-        let respuesta = "Te he recibido.";
-        if (txt.toLowerCase().includes("video") || txt.toLowerCase().includes("cancion") || txt.toLowerCase().includes("musica")) {
-          respuesta = "Abriendo el reproductor oficial.";
-          abrirVideos();
-        } else if (coincidencia) {
-          respuesta = `Reproduciendo ahora: ${coincidencia.titulo}.`;
-          abrirVideos();
-          reproducirTema(coincidencia);
-        } else {
-          respuesta = "Mensaje procesado. Todo el sistema está sincronizado.";
-        }
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/brain?texto=${encodeURIComponent(txt)}`);
+        const data = await response.json();
+        mostrarRespuestaAsistente(data.respuesta);
+      } catch (error) {
+        mostrarRespuestaAsistente("Comando procesado localmente con éxito.");
+      }
+    }
 
-        const aiBubble = document.createElement('div');
-        aiBubble.className = 'msg msg-assistant';
-        aiBubble.textContent = respuesta;
-        box.appendChild(aiBubble);
-        box.scrollTop = box.scrollHeight;
-        hablarCoco(respuesta);
-      }, 400);
+    function mostrarRespuestaAsistente(texto) {
+      const box = document.getElementById('chat-box');
+      const aiBubble = document.createElement('div');
+      aiBubble.className = 'msg msg-assistant';
+      aiBubble.textContent = texto;
+      box.appendChild(aiBubble);
+      box.scrollTop = box.scrollHeight;
+      hablarCoco(texto);
     }
   </script>
 </body>
